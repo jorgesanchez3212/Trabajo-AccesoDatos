@@ -1,17 +1,16 @@
-package models
+package dto
 
 import kotlinx.serialization.Serializable
-import java.time.LocalDate
 
 @Serializable
-data class Trabajador(
+data class TrabajadorDTO(
     val id : Int,
     val nombre : String,
     val teléfono : Int,
     val email : String, // Es unico
     val username : String,
     val contraseña : String, //Cifrada con Bcrypt
-    val fechaContratacion : LocalDate,
+    val fechaContratacion : String,
     val especialidad : String,
     val salario : Int,
     val responsable : Boolean
