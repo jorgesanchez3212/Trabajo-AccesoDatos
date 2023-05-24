@@ -6,6 +6,7 @@ import kotlinx.serialization.Serializable
 import org.bson.codecs.pojo.annotations.BsonId
 import org.litote.kmongo.newId
 import java.time.LocalDate
+import java.util.UUID
 
 @Serializable
 data class Vehiculo(

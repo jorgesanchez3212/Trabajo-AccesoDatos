@@ -21,6 +21,8 @@ dependencies {
 
     // BCrypt
     implementation("com.ToxicBakery.library.bcrypt:bcrypt:1.0.9")
+    //Cache4K
+    implementation("io.github.reactivecircus.cache4k:cache4k:0.9.0")
 
     testImplementation(kotlin("test"))
 }
