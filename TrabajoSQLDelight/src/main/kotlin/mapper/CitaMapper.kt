@@ -4,7 +4,7 @@ import dto.CitaDTO
 import models.Cita
 import java.time.LocalDateTime
 
-
+/*
 fun toCitaDTO(cita: Cita) : CitaDTO {
     return CitaDTO(
         cita.id,
@@ -25,3 +25,5 @@ fun toCita(cita: CitaDTO) : Cita {
         cita.idPropietario,
     )
 }
+
+ */

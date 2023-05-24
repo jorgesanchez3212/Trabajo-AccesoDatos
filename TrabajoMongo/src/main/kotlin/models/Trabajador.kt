@@ -1,21 +1,20 @@
 package models
 
+import kotlinx.serialization.Contextual
+import org.bson.codecs.pojo.annotations.BsonId
+import org.litote.kmongo.newId
 import kotlinx.serialization.Serializable
 import java.time.LocalDate
-import javax.persistence.*
 
 @Serializable
-@Entity
-@Table(name = "Trabajador")
 data class Trabajador(
-    @Id
-    @GeneratedValue
-    val id : Int,
+    @BsonId @Contextual
+    val _id : String = newId<Trabajador>().toString(),
     val nombre : String,
     val teléfono : Int,
-    val email : String, // Es unico
+    val email : String,
     val username : String,
-    val contraseña : String, //Cifrada con Bcrypt
+    val contraseña : ByteArray,
     val fechaContratacion : LocalDate,
     val especialidad : String,
     val salario : Int,

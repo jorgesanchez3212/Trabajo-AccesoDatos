@@ -1,9 +1,14 @@
 package models
 
 import kotlinx.serialization.Serializable
+import javax.persistence.*
 
 @Serializable
+@Entity
+@Table(name = "Informe")
 data class Informe(
+    @Id
+    @GeneratedValue
     val frenado : Int,
     val contaminación : Double,
     val aptoFrenado: Boolean,
