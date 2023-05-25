@@ -4,10 +4,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import models.Cita
 import services.citas.CitaCache
+import java.time.LocalDateTime
 
 class CitaRepositoryCached (
     private val cache : CitaCache
-        ) : ICitaRepository{
+        ) : ICitaRepositoryCached{
+
+
     override suspend fun findAll(): Flow<Cita> {
         val citas = cache.cache.asMap().values.asFlow()
         return citas

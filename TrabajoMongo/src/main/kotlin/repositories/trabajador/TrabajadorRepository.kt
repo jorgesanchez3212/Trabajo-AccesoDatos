@@ -6,6 +6,7 @@ import exception.TrabajadorException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.reactive.asFlow
 import models.Trabajador
+import org.litote.kmongo.eq
 
 class TrabajadorRepository : ITrabajadorRepository {
     override suspend fun findAll(): Flow<Trabajador> {
@@ -17,11 +18,11 @@ class TrabajadorRepository : ITrabajadorRepository {
     }
 
     override suspend fun findByEmail(email: String): Trabajador? {
-        return MongoDbManager.database.getCollection<Trabajador>().findOne(email)
+        return MongoDbManager.database.getCollection<Trabajador>().findOne(Trabajador::email eq email)
     }
 
     override suspend fun findByUsername(username: String): Trabajador? {
-        return MongoDbManager.database.getCollection<Trabajador>().findOne(username)
+        return MongoDbManager.database.getCollection<Trabajador>().findOne(Trabajador::username eq username)
     }
 
     override suspend fun save(entity: Trabajador) {

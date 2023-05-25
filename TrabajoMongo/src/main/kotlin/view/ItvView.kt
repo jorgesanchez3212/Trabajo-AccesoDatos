@@ -4,7 +4,9 @@ import controllers.*
 import db.Data
 import kotlinx.coroutines.flow.toList
 import models.Trabajador
+import mu.KotlinLogging
 import org.litote.kmongo.newId
+import java.time.LocalDate
 
 class ItvView(
     private val citaController : CitaController,
@@ -65,9 +67,19 @@ class ItvView(
     }
 
     suspend fun comprobarRestricciones(){
-        logger.info("Comprobamos las restricciones")
-        logger.info("1 -> El email es unico y dos trabajadores no pueden tener el mismo email")
-        val trabajador = Trabajador(2,"pepe",6666666,)
+
+
+
+    }
+
+    suspend fun opciones(){
+       for (i in Data.trabajadores){
+           logger.info("Trabajadores añadidos")
+           trabajadorController.saveTrabajador(i)
+           trabajadorController.borrarTrabajador(i._id)
+           logger.info("Trabajador borrado")
+       }
+
 
 
     }
