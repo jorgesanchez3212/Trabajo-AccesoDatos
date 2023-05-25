@@ -26,6 +26,9 @@ dependencies {
 
     implementation("io.github.microutils:kotlin-logging-jvm:3.0.4")
     implementation("ch.qos.logback:logback-classic:1.4.4")
+
+    testImplementation("io.mockk:mockk:1.12.4")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
     testImplementation(kotlin("test"))
 }
 
