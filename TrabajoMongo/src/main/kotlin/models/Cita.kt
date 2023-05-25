@@ -5,7 +5,6 @@ import kotlinx.serialization.Serializable
 import org.bson.codecs.pojo.annotations.BsonId
 import org.litote.kmongo.newId
 import java.time.LocalDateTime
-import java.util.*
 
 @Serializable
 data class Cita(

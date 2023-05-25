@@ -24,6 +24,8 @@ dependencies {
     //Cache4K
     implementation("io.github.reactivecircus.cache4k:cache4k:0.9.0")
 
+    implementation("io.github.microutils:kotlin-logging-jvm:3.0.4")
+    implementation("ch.qos.logback:logback-classic:1.4.4")
     testImplementation(kotlin("test"))
 }
 
