@@ -9,6 +9,13 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <!-- Añadir clases -->
+        <class>models.Trabajador</class>
+        <class>models.Vehiculo</class>
+        <class>models.Propietario</class>
+        <class>models.Cita</class>
+        <class>models.Informe</class>
+
+
 
 
 
