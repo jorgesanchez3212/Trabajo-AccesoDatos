@@ -26,16 +26,16 @@ data class Cita(
     @Serializable(with = UUIDSerializer::class)
     var uuid: UUID = UUID.randomUUID(),
     @Serializable(with = LocalDateTimeSerializer::class)
-    val fechaHora : LocalDateTime,
+    var fechaHora : LocalDateTime,
     @OneToOne
     @JoinColumn(name = "trabajador_id",nullable = false)
-    val idTrabajador : Trabajador,
+    var idTrabajador : Trabajador,
     @OneToOne
     @JoinColumn(name = "vehiculo_id",nullable = false)
-    val idVehiculo : Vehiculo,
+    var idVehiculo : Vehiculo,
     @OneToOne
     @JoinColumn(name = "propietario_id",nullable = false)
-    val idPropietario : Propietario
+    var idPropietario : Propietario
 
 ) {
 }

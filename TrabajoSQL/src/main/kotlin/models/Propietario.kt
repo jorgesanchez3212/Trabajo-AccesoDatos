@@ -23,9 +23,9 @@ data class Propietario(
     @Type(type = "uuid-char")
     @Serializable(with = UUIDSerializer::class)
     var uuid: UUID = UUID.randomUUID(),
-    val dni : String,
-    val nombre: String,
-    val apellidos : String,
-    val teléfono : String
+    var dni : String,
+    var nombre: String,
+    var apellidos : String,
+    var teléfono : String
 ) {
 }

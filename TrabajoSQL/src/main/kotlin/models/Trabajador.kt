@@ -28,16 +28,16 @@ data class Trabajador(
     @Type(type = "uuid-char")
     @Serializable(with = UUIDSerializer::class)
     var uuid:UUID = UUID.randomUUID(),
-    val nombre : String,
-    val teléfono : Int,
-    val email : String,
-    val username : String,
-    val contraseña : ByteArray,
+    var nombre : String,
+    var telefono : Int,
+    var email : String,
+    var username : String,
+    var contraseña : ByteArray,
     @Serializable(with = LocalDateSerializer::class)
-    val fechaContratacion : LocalDate,
-    val especialidad : String,
-    val salario : Int,
-    val responsable : Boolean
+    var fechaContratacion : LocalDate,
+    var especialidad : String,
+    var salario : Int,
+    var responsable : Boolean
 
 ) {
     enum class Especialidad(){

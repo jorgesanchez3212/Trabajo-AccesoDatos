@@ -23,20 +23,20 @@ data class Informe(
     @Type(type = "uuid-char")
     @Serializable(with = UUIDSerializer::class)
     var uuid: UUID = UUID.randomUUID(),
-    val frenado : Int,
-    val contaminación : Double,
-    val aptoFrenado: Boolean,
-    val luces : Boolean,
-    val apto : Boolean,
+    var frenado : Int,
+    var contaminación : Double,
+    var aptoFrenado: Boolean,
+    var luces : Boolean,
+    var apto : Boolean,
     @OneToOne
     @JoinColumn(name = "trabajador_id",nullable = false)
-    val idTrabajador : Trabajador,
+    var idTrabajador : Trabajador,
     @OneToOne
     @JoinColumn(name = "vehiculo_id",nullable = false)
-    val idVehiculo : Vehiculo,
+    var idVehiculo : Vehiculo,
     @OneToOne
     @JoinColumn(name = "propietario_id",nullable = false)
-    val idPropietario : Propietario
+    var idPropietario : Propietario
 
     ) {
 }

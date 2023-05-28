@@ -26,13 +26,13 @@ data class Vehiculo(
     @Type(type = "uuid-char")
     @Serializable(with = UUIDSerializer::class)
     var uuid: UUID = UUID.randomUUID(),
-    val marca: String,
-    val modelo : String,
-    val matricula : String,
+    var marca: String,
+    var modelo : String,
+    var matricula : String,
     @Serializable(with = LocalDateSerializer::class)
-    val fechaMatriculacion : LocalDate,
+    var fechaMatriculacion : LocalDate,
     @Serializable(with = LocalDateSerializer::class)
-    val fechaUltimaRevision : LocalDate
+    var fechaUltimaRevision : LocalDate
 
 ) {
 }
