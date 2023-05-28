@@ -4,6 +4,7 @@ import exception.CitaControllerException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import models.Cita
@@ -21,24 +22,21 @@ class CitaController(
         return citaRepository.findAll().flowOn(Dispatchers.IO)
     }
 
-/*
+
     suspend fun saveCita(entity: Cita) {
         withContext(Dispatchers.IO) {
-            val trabajador = entity.idTrabajador // Obtén el trabajador asignado a la cita
+            val trabajador = entity.idTrabajador
 
-            // Verificar el límite de 4 citas por intervalo para el trabajador
-            val citasIntervaloTrabajador = citaRepository.findByTrabajadorAndIntervalo(trabajador, entity.fechaHora)
+            val citasIntervaloTrabajador = citaRepository.findByTrabajadorAndIntervalo(trabajador.uuid, entity.fechaHora)
             if (citasIntervaloTrabajador.size >= 4) {
                 throw CitaControllerException("El trabajador no tiene hueco disponible en este intervalo de 30 minutos")
             }
 
-            // Verificar el límite de 8 citas en el mismo intervalo
             val citasIntervalo = citaRepository.findByIntervalo(entity.fechaHora)
             if (citasIntervalo.size >= 8) {
                 throw CitaControllerException("No hay disponibilidad de citas en este intervalo de 30 minutos")
             }
 
-            // Guardar la cita en la base de datos y en el caché
             launch {
                 citaRepository.save(entity)
             }
@@ -49,7 +47,7 @@ class CitaController(
     }
 
 
- */
+
 
 
 

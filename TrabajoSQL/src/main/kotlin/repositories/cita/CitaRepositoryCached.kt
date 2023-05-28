@@ -9,7 +9,7 @@ import java.util.UUID
 
 class CitaRepositoryCached (
     private val cache : CitaCache
-) : ICitaRepository{
+) : ICitaRepositoryCached{
 
 
     override suspend fun findAll(): Flow<Cita> {
