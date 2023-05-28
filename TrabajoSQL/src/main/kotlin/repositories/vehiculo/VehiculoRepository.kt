@@ -31,11 +31,13 @@ class VehiculoRepository : IVehiculoRepository {
         return encontrado
     }
 
-    override suspend fun save(entity: Vehiculo) {
+    override suspend fun save(entity: Vehiculo) : Vehiculo {
         logger.info { "Insertando el vehiculo $entity" }
+        var vehiculo : Vehiculo? = null
         HibernateManager.transaction {
-            HibernateManager.manager.merge(entity)
+            vehiculo = HibernateManager.manager.merge(entity)
         }
+        return vehiculo!!
     }
 
     override suspend fun update(entity: Vehiculo) {

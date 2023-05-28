@@ -10,7 +10,7 @@ import java.util.UUID
 import javax.persistence.*
 
 @Entity
-@Table(name = "Trabajador")
+@Table(name = "trabajadores")
 @NamedQueries(
     NamedQuery(name ="Trabajador.findAll", query = "select t from Trabajador t"),
     NamedQuery(name = "Trabajador.findByEmail", query = "select t from Trabajador t where t.email= :email"),
@@ -27,7 +27,7 @@ data class Trabajador(
     @Column(name = "uuid")
     @Type(type = "uuid-char")
     @Serializable(with = UUIDSerializer::class)
-    var uuid:UUID = UUID.randomUUID(),
+    var uuid: UUID = UUID.randomUUID(),
     var nombre : String,
     var telefono : Int,
     var email : String,

@@ -11,7 +11,7 @@ import javax.persistence.TypedQuery
 
 private var logger = KotlinLogging.logger {  }
 
-class PropietarioReposcitory : IPropietarioRepository {
+class PropietarioRepository : IPropietarioRepository {
     override suspend fun findAll(): Flow<Propietario> {
         logger.info { "Buscando todos los propietarios" }
         var lista = mutableListOf<Propietario>()
@@ -32,11 +32,13 @@ class PropietarioReposcitory : IPropietarioRepository {
 
     }
 
-    override suspend fun save(entity: Propietario) {
+    override suspend fun save(entity: Propietario) : Propietario {
         logger.info { "Insertando el propietario $entity" }
+        var propietario : Propietario? = null
         HibernateManager.transaction {
-            manager.merge(entity)
+            propietario = manager.merge(entity)
         }
+        return propietario!!
     }
 
     override suspend fun update(entity: Propietario) {

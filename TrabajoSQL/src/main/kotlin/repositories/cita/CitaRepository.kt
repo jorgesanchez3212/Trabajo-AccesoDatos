@@ -32,11 +32,13 @@ class CitaRepository : ICitaRepository {
         return encontrado
     }
 
-    override suspend fun save(entity: Cita) {
+    override suspend fun save(entity: Cita) : Cita {
         logger.info { "Insertando la cita $entity" }
+        var cita : Cita? = null
         HibernateManager.transaction {
-            HibernateManager.manager.merge(entity)
+            cita = HibernateManager.manager.merge(entity)
         }
+        return cita!!
     }
 
     override suspend fun update(entity: Cita) {

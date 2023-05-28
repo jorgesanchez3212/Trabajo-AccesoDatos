@@ -45,12 +45,13 @@ class TrabajadorRepository : ITrabajadorRepository {
         return encontrado
     }
 
-    override suspend fun save(item: Trabajador) {
+    override suspend fun save(item: Trabajador) : Trabajador {
         logger.debug { "Insertando trabajador" }
-        var add: Trabajador? = null
+        var trabajador : Trabajador? = null
         HibernateManager.transaction {
-            add = manager.merge(item)
+            trabajador = manager.merge(item)
         }
+        return trabajador!!
     }
 
     override suspend fun update(entity: Trabajador) {
@@ -81,13 +82,12 @@ class TrabajadorRepository : ITrabajadorRepository {
 
     override suspend fun delete(uuid: UUID) {
         logger.debug { "Eliminando trabajador"}
+        var result = false
         HibernateManager.transaction {
             val trabajador = manager.find(Trabajador::class.java, uuid)
-            if (trabajador != null) {
-                manager.remove(trabajador)
-                logger.debug { "Trabajador eliminado correctamente" }
-            } else {
-                logger.debug { "No se encontró ningún trabajador con el UUID: $uuid" }
+            trabajador?.let {
+                manager.remove(it)
+                result = true
             }
         }
 
@@ -104,4 +104,13 @@ class TrabajadorRepository : ITrabajadorRepository {
         return lista.asFlow()
     }
 
+    fun deleteAll(): Boolean {
+        var eliminado = false
+        HibernateManager.transaction {
+            var query = manager.createQuery("delete from Trabajador")
+            query.executeUpdate()
+            eliminado = true
+        }
+        return eliminado
+    }
 }

@@ -17,8 +17,9 @@ class VehiculoRepositoryCached(
         return vehiculosCache.cache.get(id)
     }
 
-    override suspend fun save(entity: Vehiculo) {
+    override suspend fun save(entity: Vehiculo) : Vehiculo {
         vehiculosCache.cache.put(entity.uuid,entity)
+        return entity
     }
 
     override suspend fun update(entity: Vehiculo) {

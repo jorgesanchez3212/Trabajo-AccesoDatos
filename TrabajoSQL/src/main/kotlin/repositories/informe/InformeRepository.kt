@@ -31,11 +31,13 @@ class InformeRepository : IInformeRepository {
         return encontrado
     }
 
-    override suspend fun save(entity: Informe) {
+    override suspend fun save(entity: Informe) : Informe {
         logger.info { "Insertando el vehiculo $entity" }
+        var informe : Informe? = null
         HibernateManager.transaction {
-            HibernateManager.manager.merge(entity)
+            informe =HibernateManager.manager.merge(entity)
         }
+        return informe!!
     }
 
     override suspend fun update(entity: Informe) {

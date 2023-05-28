@@ -18,8 +18,9 @@ class InformeRepositoryCached(
         return informesCache.cache.get(id)
     }
 
-    override suspend fun save(entity: Informe) {
+    override suspend fun save(entity: Informe) : Informe {
         informesCache.cache.put(entity.uuid, entity)
+        return entity
     }
 
     override suspend fun update(entity: Informe) {
