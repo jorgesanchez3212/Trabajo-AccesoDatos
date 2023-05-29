@@ -10,8 +10,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.springframework.stereotype.Controller
 
-
+@Controller
 class CitaController(
     private val citaRepository: CitaRepository,
     private val cache : CitaRepositoryCached
