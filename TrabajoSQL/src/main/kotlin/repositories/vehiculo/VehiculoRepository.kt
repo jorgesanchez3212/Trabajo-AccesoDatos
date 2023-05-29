@@ -75,4 +75,14 @@ class VehiculoRepository : IVehiculoRepository {
 
         }
     }
+
+    fun deleteAll(): Boolean {
+        var eliminado = false
+        HibernateManager.transaction {
+            var query = HibernateManager.manager.createQuery("delete from Vehiculo ")
+            query.executeUpdate()
+            eliminado = true
+        }
+        return eliminado
+    }
 }

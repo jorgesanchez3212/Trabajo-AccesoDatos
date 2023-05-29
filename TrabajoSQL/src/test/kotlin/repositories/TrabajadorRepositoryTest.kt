@@ -12,7 +12,7 @@ import java.time.LocalDate
 class TrabajadorRepositoryTest {
     val repository = TrabajadorRepository()
 
-    val trabajador = Trabajador(
+    val entity = Trabajador(
         nombre = "Lucia Egido",
         telefono = 601333947,
         email = "lucia@gmail.com",
@@ -29,37 +29,37 @@ class TrabajadorRepositoryTest {
     fun setUp() {
         repository.deleteAll()
     }
-    //Test del findAll de trabajadores
+
     @Test
     fun findAll()  = runBlocking {
-        repository.save(trabajador)
+        repository.save(entity)
         val list = repository.findAll().toList()
         assertAll(
             { assertNotNull(list) },
             { assertEquals(1, list.size) }
         )
-        repository.delete(trabajador.uuid)
+        repository.delete(entity.uuid)
     }
 
-    // Test del findById de trabajador
+
     @Test
     fun findById() = runBlocking {
-        val tr = repository.save(trabajador)
+        val tr = repository.save(entity)
         var encontrado = repository.findById(tr.uuid)
         assertAll(
             { assertNotNull(encontrado) },
-            { assertEquals(encontrado?.email,trabajador.email) },
-            { assertEquals(encontrado?.especialidad,trabajador.especialidad) },
-            { assertEquals(encontrado?.nombre,trabajador.nombre) }
+            { assertEquals(encontrado?.email,entity.email) },
+            { assertEquals(encontrado?.especialidad,entity.especialidad) },
+            { assertEquals(encontrado?.nombre,entity.nombre) }
 
         )
 
     }
 
-    // Test del save de trabajador
+
     @Test
     fun save() = runBlocking {
-        val tr = repository.save(trabajador)
+        val tr = repository.save(entity)
         val trabajadorr = repository.findById(tr.uuid)
         assertAll(
             { assertNotNull(trabajadorr) },
@@ -67,14 +67,14 @@ class TrabajadorRepositoryTest {
             { assertEquals(tr?.especialidad,trabajadorr?.especialidad) },
             { assertEquals(tr?.nombre,trabajadorr?.nombre) }
         )
-        repository.delete(trabajador.uuid)
+        repository.delete(entity.uuid)
     }
 
-    // Test del update de trabajador
+
     @Test
     fun update() = runBlocking {
-        val tr = repository.save(trabajador)
-        repository.update(trabajador)
+        val tr = repository.save(entity)
+        repository.update(entity)
         val trabajadores = repository.findById(tr.uuid)
         assertAll(
             { assertNotNull(trabajadores) },
@@ -84,10 +84,10 @@ class TrabajadorRepositoryTest {
 
     }
 
-    // Test del delete de trabajador
+
     @Test
     fun delete() = runBlocking {
-        val tr = repository.save(trabajador)
+        val tr = repository.save(entity)
         val trabajadorr = repository.findById(tr.uuid)
         repository.delete(tr.uuid)
 

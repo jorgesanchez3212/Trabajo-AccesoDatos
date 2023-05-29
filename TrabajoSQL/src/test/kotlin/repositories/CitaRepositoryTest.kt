@@ -1,4 +1,5 @@
 package repositories
 
 class CitaRepositoryTest {
+
 }

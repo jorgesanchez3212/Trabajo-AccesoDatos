@@ -78,4 +78,15 @@ class InformeRepository : IInformeRepository {
 
         }
     }
+
+
+    fun deleteAll(): Boolean {
+        var eliminado = false
+        HibernateManager.transaction {
+            var query = HibernateManager.manager.createQuery("delete from Propietario ")
+            query.executeUpdate()
+            eliminado = true
+        }
+        return eliminado
+    }
 }

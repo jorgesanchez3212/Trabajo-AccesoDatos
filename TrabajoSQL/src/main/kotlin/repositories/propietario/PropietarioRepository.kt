@@ -75,4 +75,14 @@ class PropietarioRepository : IPropietarioRepository {
 
         }
     }
+
+    fun deleteAll(): Boolean {
+        var eliminado = false
+        HibernateManager.transaction {
+            var query = manager.createQuery("delete from Propietario ")
+            query.executeUpdate()
+            eliminado = true
+        }
+        return eliminado
+    }
 }
