@@ -22,6 +22,34 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
+
+    // Corrutinas Mongo
+    implementation("org.litote.kmongo:kmongo-coroutine:4.7.2")
+
+    // Corrutinas
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+
+    // Logger
+    implementation("io.github.microutils:kotlin-logging-jvm:3.0.4")
+    implementation("ch.qos.logback:logback-classic:1.4.4")
+
+    // Serializacion JSON
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
+    implementation("junit:junit:4.13.1")
+    implementation("org.junit.jupiter:junit-jupiter:5.8.1")
+
+    // Bcrypt
+    implementation("com.ToxicBakery.library.bcrypt:bcrypt:1.0.9")
+
+
+    //Cache
+    implementation("io.github.reactivecircus.cache4k:cache4k:0.9.0")
+
+
+    //MOCKK
+    testImplementation("io.mockk:mockk:1.13.2")
+    testImplementation(kotlin("test"))
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
 }
 
 tasks.withType<KotlinCompile> {
