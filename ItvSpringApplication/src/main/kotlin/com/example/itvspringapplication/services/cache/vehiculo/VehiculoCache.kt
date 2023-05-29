@@ -6,10 +6,12 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.withContext
+import org.springframework.stereotype.Service
 import kotlin.time.Duration.Companion.minutes
 
 private const val STOP = 60 * 10000L
 
+@Service
 class VehiculoCache {
     val cache = Cache.Builder()
         .expireAfterWrite(1.minutes)
