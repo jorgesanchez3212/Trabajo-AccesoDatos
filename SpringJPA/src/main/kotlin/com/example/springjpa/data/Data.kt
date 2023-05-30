@@ -3,12 +3,13 @@ package com.example.springjpa.data
 import com.example.springjpa.models.*
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.util.*
 
 
 object Data {
     val vehiculos = listOf(
         Vehiculo(
-            uuid = "1",
+            uuid = UUID.fromString("8f121bdd-238a-4c59-a7e3-0c1f382aefb2"),
             marca = "Toyota",
             modelo = "Corolla",
             matricula = "ABC123",
@@ -16,7 +17,7 @@ object Data {
             fechaUltimaRevision = LocalDate.of(2022, 12, 30)
         ),
         Vehiculo(
-            uuid = "2",
+            uuid = UUID.fromString("8f121bdd-238a-4c59-a7e3-0c1f382aefb2"),
             marca = "Honda",
             modelo = "Civic",
             matricula = "DEF456",
@@ -24,7 +25,7 @@ object Data {
             fechaUltimaRevision = LocalDate.of(2023, 1, 5)
         ),
         Vehiculo(
-            uuid = "3",
+            uuid = UUID.fromString("8f121bdd-238a-4c59-a7e3-0c1f382aefb2"),
             marca = "Ford",
             modelo = "Focus",
             matricula = "GHI789",
@@ -32,7 +33,7 @@ object Data {
             fechaUltimaRevision = LocalDate.of(2022, 9, 20)
         ),
         Vehiculo(
-            uuid = "4",
+            uuid = UUID.fromString("8f121bdd-238a-4c59-a7e3-0c1f382aefb2"),
             marca = "Volkswagen",
             modelo = "Golf",
             matricula = "JKL012",
@@ -40,7 +41,7 @@ object Data {
             fechaUltimaRevision = LocalDate.of(2023, 5, 15)
         ),
         Vehiculo(
-            uuid = "5",
+            uuid = UUID.fromString("8f121bdd-238a-4c59-a7e3-0c1f382aefb2"),
             marca = "Chevrolet",
             modelo = "Cruze",
             matricula = "MNO345",
@@ -48,7 +49,7 @@ object Data {
             fechaUltimaRevision = LocalDate.of(2021, 12, 10)
         ),
         Vehiculo(
-            _id = "6",
+            uuid = UUID.fromString("8f121bdd-238a-4c59-a7e3-0c1f382aefb2"),
             marca = "BMW",
             modelo = "X5",
             matricula = "PQR678",
@@ -56,7 +57,7 @@ object Data {
             fechaUltimaRevision = LocalDate.of(2023, 4, 28)
         ),
         Vehiculo(
-            _id = "7",
+            uuid = UUID.fromString("8f121bdd-238a-4c59-a7e3-0c1f382aefb2"),
             marca = "Mercedes-Benz",
             modelo = "E-Class",
             matricula = "STU901",
@@ -67,9 +68,9 @@ object Data {
 
     val trabajadores = listOf(
         Trabajador(
-            _id = "1",
+            uuid = UUID.fromString("8f121bdd-238a-4c59-a7e3-0c1f382aefb2"),
             nombre = "Juan Pérez",
-            teléfono = 123456789,
+            telefono = 123456789,
             email = "juan@gmail.com",
             username = "juanperez",
             contraseña = "password123".toByteArray(),
@@ -79,9 +80,9 @@ object Data {
             responsable = true
         ),
         Trabajador(
-            _id = "2",
+            uuid = UUID.fromString("8f121bdd-238a-4c59-a7e3-0c1f382aefb3"),
             nombre = "María López",
-            teléfono = 987654321,
+            telefono = 987654321,
             email = "maria@gmail.com",
             username = "marialopez",
             contraseña = "securepass".toByteArray(),
@@ -91,9 +92,9 @@ object Data {
             responsable = false
         ),
         Trabajador(
-            _id = "3",
+            uuid = UUID.fromString("8f121bdd-238a-4c59-a7e3-0c1f382aefb4"),
             nombre = "Carlos Ramírez",
-            teléfono = 555555555,
+            telefono = 555555555,
             email = "carlos@gmail.com",
             username = "carlosramirez",
             contraseña = "safepassword".toByteArray(),
@@ -103,9 +104,9 @@ object Data {
             responsable = false
         ),
         Trabajador(
-            _id = "4",
+            uuid = UUID.fromString("8f121bdd-238a-4c59-a7e3-0c1f382aefb5"),
             nombre = "Laura García",
-            teléfono = 111111111,
+            telefono = 111111111,
             email = "laura@gmail.com",
             username = "lauragarcia",
             contraseña = "strongpass".toByteArray(),
@@ -115,9 +116,9 @@ object Data {
             responsable = false
         ),
         Trabajador(
-            _id = "5",
+            uuid = UUID.fromString("8f121bdd-238a-4c59-a7e3-0c1f382aefb6"),
             nombre = "Pedro Martínez",
-            teléfono = 999999999,
+            telefono = 999999999,
             email = "pedro@gmail.com",
             username = "pedromartinez",
             contraseña = "mypassword".toByteArray(),
@@ -127,9 +128,9 @@ object Data {
             responsable = false
         ),
         Trabajador(
-            _id = "6",
+            uuid = UUID.fromString("8f121bdd-238a-4c59-a7e3-0c1f382aefb7"),
             nombre = "Ana Torres",
-            teléfono = 777777777,
+            telefono = 777777777,
             email = "ana@gmail.com",
             username = "anatorres",
             contraseña = "password123".toByteArray(),
@@ -142,49 +143,49 @@ object Data {
 
     val propietarios = listOf(
         Propietario(
-            _id = "1",
+            uuid = UUID.fromString("8f121bdd-238a-4c59-a7e3-0c1f382aefb2"),
             dni = "12345678A",
             nombre = "Juan",
             apellidos = "Pérez López",
             teléfono = "123456789"
         ),
         Propietario(
-            _id = "2",
+            uuid = UUID.fromString("8f121bdd-238a-4c59-a7e3-0c1f382aefb2"),
             dni = "87654321B",
             nombre = "María",
             apellidos = "García Fernández",
             teléfono = "987654321"
         ),
         Propietario(
-            _id = "3",
+            uuid = UUID.fromString("8f121bdd-238a-4c59-a7e3-0c1f382aefb2"),
             dni = "56789012C",
             nombre = "Pedro",
             apellidos = "Martínez Sánchez",
             teléfono = "555555555"
         ),
         Propietario(
-            _id = "4",
+            uuid = UUID.fromString("8f121bdd-238a-4c59-a7e3-0c1f382aefb2"),
             dni = "90123456D",
             nombre = "Laura",
             apellidos = "Torres Rodríguez",
             teléfono = "111111111"
         ),
         Propietario(
-            _id = "5",
+            uuid = UUID.fromString("8f121bdd-238a-4c59-a7e3-0c1f382aefb2"),
             dni = "34567890E",
             nombre = "Ana",
             apellidos = "López Navarro",
             teléfono = "999999999"
         ),
         Propietario(
-            _id = "6",
+            uuid = UUID.fromString("8f121bdd-238a-4c59-a7e3-0c1f382aefb2"),
             dni = "67890123F",
             nombre = "Carlos",
             apellidos = "Gómez Ruiz",
             teléfono = "777777777"
         ),
         Propietario(
-            _id = "7",
+            uuid = UUID.fromString("8f121bdd-238a-4c59-a7e3-0c1f382aefb2"),
             dni = "23456789G",
             nombre = "Sara",
             apellidos = "Hernández García",
