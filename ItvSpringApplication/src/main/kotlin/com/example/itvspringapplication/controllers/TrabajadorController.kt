@@ -2,7 +2,6 @@ package com.example.itvspringapplication.controllers
 
 
 import com.example.itvspringapplication.exception.TrabajadorControllerException
-import com.example.itvspringapplication.models.Cita
 import com.example.itvspringapplication.models.Trabajador
 import com.example.itvspringapplication.repositories.trabajador.TrabajadorRepository
 import com.example.itvspringapplication.utils.Cifrado

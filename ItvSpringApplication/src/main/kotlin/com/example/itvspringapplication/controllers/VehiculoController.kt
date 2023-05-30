@@ -7,7 +7,6 @@ import com.example.itvspringapplication.repositories.vehiculo.VehiculoRepository
 import com.example.itvspringapplication.repositories.vehiculo.VehiculoRepositoryCached
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.springframework.beans.factory.annotation.Autowired

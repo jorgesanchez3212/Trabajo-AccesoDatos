@@ -1,4 +1,5 @@
 package com.example.itvspringapplication.controllers
+
 import com.example.itvspringapplication.exception.PropietarioControllerException
 import com.example.itvspringapplication.models.Propietario
 import com.example.itvspringapplication.models.Trabajador
