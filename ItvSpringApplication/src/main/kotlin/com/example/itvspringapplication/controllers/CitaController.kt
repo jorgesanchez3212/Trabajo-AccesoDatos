@@ -10,10 +10,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 
 @Controller
-class CitaController(
+class CitaController
+    @Autowired constructor(
     private val citaRepository: CitaRepository,
     private val cache : CitaRepositoryCached
 ) {
@@ -22,20 +24,21 @@ class CitaController(
     suspend fun findAllCita() : Flow<Cita> {
         return citaRepository.findAll().flowOn(Dispatchers.IO)
     }
-/*
+
 
     suspend fun saveCita(entity: Cita) {
         withContext(Dispatchers.IO) {
-            val trabajador = entity.idTrabajador // Obtén el trabajador asignado a la cita
+            val trabajador = entity.trabajador // Obtén el trabajador asignado a la cita
 
+            val intervaloFin = entity.fechaHora.plusMinutes(30)
             // Verificar el límite de 4 citas por intervalo para el trabajador
-            val citasIntervaloTrabajador = citaRepository.findByTrabajadorAndIntervalo(trabajador, entity.fechaHora)
+            val citasIntervaloTrabajador = citaRepository.findCitasByTrabajadorAndFechaHoraBetween(trabajador, entity.fechaHora,intervaloFin)
             if (citasIntervaloTrabajador.size >= 4) {
                 throw CitaControllerException("El trabajador no tiene hueco disponible en este intervalo de 30 minutos")
             }
 
             // Verificar el límite de 8 citas en el mismo intervalo
-            val citasIntervalo = citaRepository.findByIntervalo(entity.fechaHora)
+            val citasIntervalo = citaRepository.findCitasByFechaHoraBetween(entity.fechaHora,intervaloFin)
             if (citasIntervalo.size >= 8) {
                 throw CitaControllerException("No hay disponibilidad de citas en este intervalo de 30 minutos")
             }
@@ -52,7 +55,7 @@ class CitaController(
 
 
 
- */
+
 
 
     suspend fun findByIdCita(id : String) : Cita?{

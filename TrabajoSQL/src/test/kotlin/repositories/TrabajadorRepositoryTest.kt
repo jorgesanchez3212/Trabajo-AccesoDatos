@@ -8,11 +8,13 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import repositories.trabajador.TrabajadorRepository
 import java.time.LocalDate
+import java.util.*
 
 class TrabajadorRepositoryTest {
     val repository = TrabajadorRepository()
 
     val entity = Trabajador(
+        uuid = UUID.fromString("8f121bdd-238a-4c59-a7e3-0c1f382aefb2"),
         nombre = "Lucia Egido",
         telefono = 601333947,
         email = "lucia@gmail.com",
@@ -45,7 +47,7 @@ class TrabajadorRepositoryTest {
     @Test
     fun findById() = runBlocking {
         val tr = repository.save(entity)
-        var encontrado = repository.findById(tr.uuid)
+        var encontrado = repository.findById(UUID.fromString("8f121bdd-238a-4c59-a7e3-0c1f382aefb2"))
         assertAll(
             { assertNotNull(encontrado) },
             { assertEquals(encontrado?.email,entity.email) },

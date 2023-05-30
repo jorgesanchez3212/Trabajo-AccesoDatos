@@ -7,11 +7,13 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import repositories.propietario.PropietarioRepository
+import java.util.*
 
 class PropietarioRepositoryTest {
     val repository = PropietarioRepository()
 
     val entity = Propietario(
+        uuid = UUID.fromString("8f121bdd-238a-4c59-a7e3-0c1f382aefb2"),
         dni = "12345678A",
         nombre = "Juan",
         apellidos = "Pérez López",
@@ -37,7 +39,7 @@ class PropietarioRepositoryTest {
     @Test
     fun findById() = runBlocking {
         val tr = repository.save(entity)
-        var encontrado = repository.findById(tr.uuid)
+        var encontrado = repository.findById(UUID.fromString("8f121bdd-238a-4c59-a7e3-0c1f382aefb2"))
         Assertions.assertAll(
             { Assertions.assertNotNull(encontrado) },
             { Assertions.assertEquals(encontrado?.dni,entity.dni) },

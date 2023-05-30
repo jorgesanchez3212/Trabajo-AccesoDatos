@@ -14,7 +14,7 @@ import javax.persistence.*
 )
 @Serializable
 data class Propietario(
-    @Id @GeneratedValue
+    @Id
     @GenericGenerator(
         name = "UUID",
         strategy = "org.hibernate.id.UUIDGenerator",

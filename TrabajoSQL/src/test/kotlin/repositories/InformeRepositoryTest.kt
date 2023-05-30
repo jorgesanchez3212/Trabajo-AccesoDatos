@@ -14,6 +14,7 @@ import repositories.propietario.PropietarioRepository
 import repositories.trabajador.TrabajadorRepository
 import repositories.vehiculo.VehiculoRepository
 import java.time.LocalDate
+import java.util.*
 
 class InformeRepositoryTest {
     val repository = InformeRepository()
@@ -23,6 +24,7 @@ class InformeRepositoryTest {
 
 
     val trabajador = Trabajador(
+        uuid = UUID.fromString("8f121bdd-238a-4c59-a7e3-0c1f382aefb5"),
         nombre = "Lucia Egido",
         telefono = 601333947,
         email = "lucia@gmail.com",
@@ -35,6 +37,7 @@ class InformeRepositoryTest {
     )
 
     val vehiculo = Vehiculo(
+        uuid = UUID.fromString("8f121bdd-238a-4c59-a7e3-0c1f382aefb4"),
         marca = "Mercedes-Benz",
         modelo = "E-Class",
         matricula = "STU901",
@@ -43,12 +46,14 @@ class InformeRepositoryTest {
     )
 
     val propietario = Propietario(
+        uuid = UUID.fromString("8f121bdd-238a-4c59-a7e3-0c1f382aefb3"),
         dni = "12345678A",
         nombre = "Juan",
         apellidos = "Pérez López",
         teléfono = "123456789"
     )
     val entity = Informe(
+        uuid = UUID.fromString("8f121bdd-238a-4c59-a7e3-0c1f382aefb2"),
         frenado = 5,
         contaminación = 2.1,
         aptoFrenado = true,
@@ -86,13 +91,18 @@ class InformeRepositoryTest {
 
     @Test
     fun findById() = runBlocking {
-        val tr = repository.save(entity)
-        var encontrado = repository.findById(tr.uuid)
+        val tr = trabajadorRepository.save(trabajador)
+        val pr = propietarioRrepository.save(propietario)
+        val vl = vehiculoRepository.save(vehiculo)
+
+        val r = repository.save(entity)
+
+        var encontrado = repository.findById(UUID.fromString("8f121bdd-238a-4c59-a7e3-0c1f382aefb2"))
         Assertions.assertAll(
             { Assertions.assertNotNull(encontrado) },
-            { Assertions.assertEquals(tr.apto, encontrado?.apto) },
-            { Assertions.assertEquals(tr?.contaminación,encontrado?.contaminación) },
-            { Assertions.assertEquals(tr?.frenado,encontrado?.frenado) }
+            { Assertions.assertEquals(r.apto, encontrado?.apto) },
+            { Assertions.assertEquals(r?.contaminación,encontrado?.contaminación) },
+            { Assertions.assertEquals(r?.frenado,encontrado?.frenado) }
 
         )
 

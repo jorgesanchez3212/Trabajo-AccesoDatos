@@ -17,7 +17,7 @@ import javax.persistence.*
     )
 @Serializable
 data class Vehiculo(
-    @Id @GeneratedValue
+    @Id
     @GenericGenerator(
         name = "UUID",
         strategy = "org.hibernate.id.UUIDGenerator",

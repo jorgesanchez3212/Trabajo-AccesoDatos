@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import repositories.vehiculo.VehiculoRepository
 import java.time.LocalDate
+import java.util.*
 
 class VehiculoRepositoryTest {
 
@@ -15,6 +16,7 @@ class VehiculoRepositoryTest {
 
 
     val entity = Vehiculo(
+        uuid = UUID.fromString("8f121bdd-238a-4c59-a7e3-0c1f382aefb2"),
         marca = "Mercedes-Benz",
         modelo = "E-Class",
         matricula = "STU901",
@@ -41,7 +43,7 @@ class VehiculoRepositoryTest {
     @Test
     fun findById() = runBlocking {
         val tr = repository.save(entity)
-        var encontrado = repository.findById(tr.uuid)
+        var encontrado = repository.findById(UUID.fromString("8f121bdd-238a-4c59-a7e3-0c1f382aefb2"))
         Assertions.assertAll(
             { Assertions.assertNotNull(encontrado) },
             { Assertions.assertEquals(encontrado?.marca,entity.marca) },

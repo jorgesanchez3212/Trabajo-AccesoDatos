@@ -19,7 +19,7 @@ import javax.persistence.*
 )
 @Serializable
 data class Trabajador(
-    @Id @GeneratedValue
+    @Id
     @GenericGenerator(
         name = "UUID",
         strategy = "org.hibernate.id.UUIDGenerator",

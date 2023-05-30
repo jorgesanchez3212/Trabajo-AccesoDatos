@@ -16,10 +16,10 @@ data class Cita(
     @Serializable(with = LocalDateTimeSerializer::class)
     val fechaHora : LocalDateTime,
     @DocumentReference
-    val idTrabajador : Trabajador,
+    val trabajador : Trabajador,
     @DocumentReference
-    val idVehiculo : Vehiculo,
+    val vehiculo : Vehiculo,
     @DocumentReference
-    val idPropietario : Propietario
+    val propietario : Propietario
 ) {
 }
