@@ -29,7 +29,7 @@ class CitaController
 
     suspend fun saveCita(entity: Cita) {
         withContext(Dispatchers.IO) {
-            val trabajador = entity.idTrabajador // Obtén el trabajador asignado a la cita
+            val trabajador = entity.trabajador // Obtén el trabajador asignado a la cita
 
             val intervaloFin = entity.fechaHora.plusMinutes(30)
             // Verificar el límite de 4 citas por intervalo para el trabajador

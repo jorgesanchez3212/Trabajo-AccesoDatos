@@ -34,9 +34,9 @@ class CitaRepositoryCached
         if (cacheCita!=null){
             val citaUpdate = cacheCita.copy(
                 fechaHora = entity.fechaHora,
-                idTrabajador = entity.idTrabajador,
-                idPropietario = entity.idPropietario,
-                idVehiculo = entity.idVehiculo
+                trabajador = entity.trabajador,
+                propietario = entity.propietario,
+                vehiculo = entity.vehiculo
             )
             cache.cache.put(entity.uuid,citaUpdate)
         }

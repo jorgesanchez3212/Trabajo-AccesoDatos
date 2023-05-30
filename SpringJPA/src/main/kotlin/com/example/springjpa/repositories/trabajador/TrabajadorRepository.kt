@@ -7,8 +7,8 @@ import java.util.UUID
 
 @Repository
 interface TrabajadorRepository : JpaRepository<Trabajador,UUID>{
-    suspend fun findTrabajadorByEmail(email:String):Trabajador?
-    suspend fun findTrabajadorByUsername(username:String):Trabajador?
+    fun findTrabajadorByEmail(email:String):Trabajador?
+    fun findTrabajadorByUsername(username:String):Trabajador?
 
 
 }

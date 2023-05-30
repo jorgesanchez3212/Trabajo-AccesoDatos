@@ -18,13 +18,13 @@ data class Cita(
     var fechaHora : LocalDateTime,
     @OneToOne
     @JoinColumn(name = "trabajador_id",nullable = false)
-    var idTrabajador : Trabajador,
+    var trabajador : Trabajador,
     @OneToOne
     @JoinColumn(name = "vehiculo_id",nullable = false)
-    var idVehiculo : Vehiculo,
+    var vehiculo : Vehiculo,
     @OneToOne
     @JoinColumn(name = "propietario_id",nullable = false)
-    var idPropietario : Propietario
+    var propietario : Propietario
 
 ) {
 }
