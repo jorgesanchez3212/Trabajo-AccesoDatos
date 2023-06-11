@@ -72,7 +72,14 @@ class TrabajadorController(
         }
     }
 
+    suspend fun findById(id : String){
+        withContext(Dispatchers.IO){
+            launch {
+                trabajadoresRepository.findById(id)
+            }
+        }
 
+    }
 
 
     suspend fun updateTrabajador(entity: Trabajador){

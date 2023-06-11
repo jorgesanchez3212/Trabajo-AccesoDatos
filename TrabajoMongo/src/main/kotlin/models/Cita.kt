@@ -10,6 +10,7 @@ import java.time.LocalDateTime
 data class Cita(
     @BsonId @Contextual
     val _id : String = newId<Cita>().toString(),
+    @Contextual
     val fechaHora : LocalDateTime,
     val idTrabajador : String,
     val idVehiculo : String,

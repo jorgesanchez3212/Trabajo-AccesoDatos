@@ -15,7 +15,9 @@ data class Vehiculo(
     val marca: String,
     val modelo : String,
     val matricula : String,
+    @Contextual
     val fechaMatriculacion : LocalDate,
+    @Contextual
     val fechaUltimaRevision : LocalDate
 
 ) {

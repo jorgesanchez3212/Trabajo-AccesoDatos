@@ -15,6 +15,7 @@ data class Trabajador(
     val email : String,
     val username : String,
     val contraseña : ByteArray,
+    @Contextual
     val fechaContratacion : LocalDate,
     val especialidad : String,
     val salario : Int,

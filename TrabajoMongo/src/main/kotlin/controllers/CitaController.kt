@@ -71,22 +71,19 @@ class CitaController(
             launch {
                 citaRepository.delete(id)
             }
-            launch {
-                cache.delete(id)
-            }
         }
+        cache.delete(id)
+
     }
 
 
     suspend fun updateCita(entity: Cita){
         withContext(Dispatchers.IO){
             launch {
-                citaRepository.update(entity)            }
-            launch {
-                cache.update(entity)
+                citaRepository.update(entity)
             }
         }
-
+        cache.update(entity)
 
     }
 

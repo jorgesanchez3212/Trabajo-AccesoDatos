@@ -21,5 +21,7 @@ fun main() = runBlocking {
         VehiculoController(VehiculoRepository(), VehiculoRepositoryCached(VehiculosCache()))
         )
 
-    itv.opciones()
+    itv.añadirDatos()
+    itv.informes()
+
 }

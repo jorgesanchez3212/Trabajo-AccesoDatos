@@ -15,7 +15,9 @@ class ItvSpringApplication
     private val watchers : Watchers
 ) : CommandLineRunner{
     override fun run(vararg args: String?) = runBlocking {
-        vista.opciones()
+        //vista.borrarTodo()
+        vista.añadirDatos()
+        vista.informes()
     }
 
 }

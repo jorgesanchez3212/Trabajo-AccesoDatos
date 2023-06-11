@@ -69,8 +69,8 @@ object Data {
             _id = "1",
             nombre = "Juan Pérez",
             teléfono = 123456789,
-            email = "juan@gmail.com",
-            username = "juanperez",
+            email = "juan12@gmail.com",
+            username = "juanperez12",
             contraseña = "password123".toByteArray(),
             fechaContratacion = LocalDate.of(2020, 5, 15),
             especialidad = Trabajador.Especialidad.MOTOR.name,
@@ -193,6 +193,7 @@ object Data {
 
     val informes = listOf(
         Informe(
+            _id = "1",
             frenado = 5,
             contaminación = 2.1,
             aptoFrenado = true,
@@ -203,6 +204,7 @@ object Data {
             idPropietario = "1"
         ),
         Informe(
+            _id = "2",
             frenado = 3,
             contaminación = 1.8,
             aptoFrenado = false,
@@ -213,6 +215,7 @@ object Data {
             idPropietario = "2"
         ),
         Informe(
+            _id = "3",
             frenado = 4,
             contaminación = 1.5,
             aptoFrenado = true,
@@ -223,6 +226,7 @@ object Data {
             idPropietario = "3"
         ),
         Informe(
+            _id = "4",
             frenado = 2,
             contaminación = 3.2,
             aptoFrenado = false,
@@ -233,6 +237,7 @@ object Data {
             idPropietario = "4"
         ),
         Informe(
+            _id = "5",
             frenado = 5,
             contaminación = 2.5,
             aptoFrenado = true,
@@ -243,6 +248,7 @@ object Data {
             idPropietario = "5"
         ),
         Informe(
+            _id = "6",
             frenado = 3,
             contaminación = 1.9,
             aptoFrenado = false,
@@ -253,6 +259,7 @@ object Data {
             idPropietario = "6"
         ),
         Informe(
+            _id = "7",
             frenado = 4,
             contaminación = 1.4,
             aptoFrenado = true,
@@ -268,42 +275,49 @@ object Data {
 
     val citas = listOf(
         Cita(
+            _id = "1",
             fechaHora = fechaInicio.plusMinutes(30),
             idTrabajador = "1",
             idVehiculo = "1",
             idPropietario = "1"
         ),
         Cita(
+            _id = "2",
             fechaHora = fechaInicio.plusMinutes(60),
             idTrabajador = "2",
             idVehiculo = "2",
             idPropietario = "2"
         ),
         Cita(
+            _id = "3",
             fechaHora = fechaInicio.plusMinutes(90),
             idTrabajador = "3",
             idVehiculo = "3",
             idPropietario = "3"
         ),
         Cita(
+            _id = "4",
             fechaHora = fechaInicio.plusMinutes(120),
             idTrabajador = "4",
             idVehiculo = "4",
             idPropietario = "4"
         ),
         Cita(
+            _id = "5",
             fechaHora = fechaInicio.plusMinutes(150),
             idTrabajador = "5",
             idVehiculo = "5",
             idPropietario = "5"
         ),
         Cita(
+            _id = "6",
             fechaHora = fechaInicio.plusMinutes(180),
             idTrabajador = "6",
             idVehiculo = "6",
             idPropietario = "6"
         ),
         Cita(
+            _id = "7",
             fechaHora = fechaInicio.plusMinutes(210),
             idTrabajador = "7",
             idVehiculo = "7",
