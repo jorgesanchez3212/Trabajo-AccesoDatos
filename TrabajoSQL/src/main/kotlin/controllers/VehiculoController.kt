@@ -17,8 +17,8 @@ class VehiculoController(
 ) {
 
 
-    suspend fun findAllVehiculo() : Flow<Vehiculo> {
-        return vehiculoRepository.findAll().flowOn(Dispatchers.IO)
+    suspend fun findAllVehiculo() : Flow<Vehiculo>? {
+        return vehiculoRepository.findAll().getOrNull()?.flowOn(Dispatchers.IO)
     }
 
     suspend fun saveVehiculo(entity : Vehiculo){
@@ -37,7 +37,7 @@ class VehiculoController(
     suspend fun findByIdVehiculo(id : UUID) : Vehiculo?{
         val vehiculoCached = cache.findById(id)
         if(vehiculoCached == null){
-            val vehiculo = vehiculoRepository.findById(id)
+            val vehiculo = vehiculoRepository.findById(id).getOrNull()
             if (vehiculo == null){
                 throw VehiculoControllerException("EL vehiculo con el id: $id no existe")
             }else{

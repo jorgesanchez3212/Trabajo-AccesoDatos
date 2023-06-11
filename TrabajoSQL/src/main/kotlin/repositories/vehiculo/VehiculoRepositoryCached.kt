@@ -8,7 +8,7 @@ import java.util.UUID
 
 class VehiculoRepositoryCached(
     private val vehiculosCache: VehiculosCache
-)  : IVehiculoRepository{
+)  : IVehiculoRepositoryCached{
     override suspend fun findAll(): Flow<Vehiculo> {
         return vehiculosCache.cache.asMap().values.asFlow()
     }
@@ -17,9 +17,8 @@ class VehiculoRepositoryCached(
         return vehiculosCache.cache.get(id)
     }
 
-    override suspend fun save(entity: Vehiculo) : Vehiculo {
+    override suspend fun save(entity: Vehiculo) {
         vehiculosCache.cache.put(entity.uuid,entity)
-        return entity
     }
 
     override suspend fun update(entity: Vehiculo) {

@@ -22,9 +22,8 @@ class CitaRepositoryCached (
         return cita
     }
 
-    override suspend fun save(entity: Cita) : Cita {
+    override suspend fun save(entity: Cita)  {
         cache.cache.put(entity.uuid,entity)
-        return entity
     }
 
     override suspend fun update(entity: Cita) {

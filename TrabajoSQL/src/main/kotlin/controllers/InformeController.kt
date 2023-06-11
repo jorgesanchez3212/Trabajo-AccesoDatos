@@ -16,8 +16,8 @@ class InformeController(
     private val cache : InformeRepositoryCached
 ) {
 
-    suspend fun findAllInforme() : Flow<Informe> {
-        return informeRepository.findAll().flowOn(Dispatchers.IO)
+    suspend fun findAllInforme() : Flow<Informe>? {
+        return informeRepository.findAll().getOrNull()?.flowOn(Dispatchers.IO)
     }
 
     suspend fun saveInforme(entity : Informe){
@@ -36,7 +36,7 @@ class InformeController(
     suspend fun findByIdInforme(id : UUID) : Informe?{
         val informeCached = cache.findById(id)
         if(informeCached == null){
-            val informe = informeRepository.findById(id)
+            val informe = informeRepository.findById(id).getOrNull()
             if (informe == null){
                 throw InformeControllerException("El informe con el id: $id no existe")
             }else{

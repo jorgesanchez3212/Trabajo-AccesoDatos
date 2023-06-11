@@ -18,12 +18,12 @@ class TrabajadorController(
 ) {
 
 
-    suspend fun findAllTrabajadores() : Flow<Trabajador>{
-        return trabajadoresRepository.findAll().flowOn(Dispatchers.IO)
+    suspend fun findAllTrabajadores() : Flow<Trabajador>?{
+        return trabajadoresRepository.findAll().getOrNull()?.flowOn(Dispatchers.IO)
     }
     suspend fun saveTrabajador(entity: Trabajador) {
-        val trabajador = trabajadoresRepository.findByEmail(entity.email)
-        val usernameTrabajador = trabajadoresRepository.findByUsername(entity.username)
+        val trabajador = trabajadoresRepository.findByEmail(entity.email).getOrNull()
+        val usernameTrabajador = trabajadoresRepository.findByUsername(entity.username).getOrNull()
         var salarioTrabajador: Int = 0
 
         val años = ChronoUnit.YEARS.between(entity.fechaContratacion, LocalDate.now())

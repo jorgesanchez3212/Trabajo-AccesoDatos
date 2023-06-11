@@ -1,8 +1,8 @@
 package repositories.cita
 
 import models.Cita
-import repositories.CrudRepository
+import repositories.CrudRepositoryCached
 import java.util.UUID
 
-interface ICitaRepositoryCached : CrudRepository<Cita,UUID> {
+interface ICitaRepositoryCached  : CrudRepositoryCached<Cita, UUID> {
 }

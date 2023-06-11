@@ -9,7 +9,7 @@ import java.util.UUID
 
 class InformeRepositoryCached(
     private val informesCache: InformeCache
-) : IInformeRepository {
+) : IInformeRepositoryCached {
     override suspend fun findAll(): Flow<Informe> {
         return informesCache.cache.asMap().values.asFlow()
     }
@@ -18,9 +18,8 @@ class InformeRepositoryCached(
         return informesCache.cache.get(id)
     }
 
-    override suspend fun save(entity: Informe) : Informe {
+    override suspend fun save(entity: Informe)  {
         informesCache.cache.put(entity.uuid, entity)
-        return entity
     }
 
     override suspend fun update(entity: Informe) {

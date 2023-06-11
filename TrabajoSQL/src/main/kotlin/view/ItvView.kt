@@ -29,32 +29,32 @@ class ItvView(
         for (i in Data.trabajadores){
             trabajadorController.saveTrabajador(i)
         }
-        val trabajadores = trabajadorController.findAllTrabajadores().toList()
+        val trabajadores = trabajadorController.findAllTrabajadores()?.toList()
         val list = mutableListOf<String>()
 
         //Trabajador que mas gana sin ser responsable
-        val trabajador = trabajadores.filter { it.responsable == false }.maxByOrNull { it.salario }
+        val trabajador = trabajadores?.filter { it.responsable == false }?.maxByOrNull { it.salario }
         println("El trabajador que mas gana sin ser responsable es ${trabajador.toString()}")
         list.add("El trabajador que mas gana sin ser responsable es ${trabajador.toString()}")
 
         //Salario medio de todos los trabajadores que no son responsables
-        val salarioMedio = trabajadores.filter { it.responsable == false }.map { it.salario }.average()
+        val salarioMedio = trabajadores?.filter { it.responsable == false }?.map { it.salario }?.average()
         println("Salario medio de todos los trabajadores que no son responsables es $salarioMedio")
         list.add("Salario medio de todos los trabajadores que no son responsables es $salarioMedio")
 
         //El salario medio de todos los trabajadores agrupados por especialidad.
-        val salarioMedioAgrupadosPorEspecialidad = trabajadores.groupBy { it.especialidad }.mapValues {
+        val salarioMedioAgrupadosPorEspecialidad = trabajadores?.groupBy { it.especialidad }?.mapValues {
                 entry -> entry.value.map { it.salario }.average() }
         println("Salario medio agrupados por especialidad es $salarioMedioAgrupadosPorEspecialidad")
         list.add("Salario medio agrupados por especialidad es $salarioMedioAgrupadosPorEspecialidad")
 
         //- La el trabajador/a con menos antigüedad
-        val trabajadorMenosAntiguedad = trabajadores.minByOrNull { it.fechaContratacion }
+        val trabajadorMenosAntiguedad = trabajadores?.minByOrNull { it.fechaContratacion }
         println("La el trabajador/a con menos antigüedad $trabajadorMenosAntiguedad")
         list.add("La el trabajador/a con menos antigüedad $trabajadorMenosAntiguedad")
 
         // Trabajadores ordenados por especialidad y ordenados por antiguedad
-        val trabajadoresOrdenados = trabajadores.sortedWith(compareBy(Trabajador::especialidad,Trabajador::fechaContratacion))
+        val trabajadoresOrdenados = trabajadores?.sortedWith(compareBy(Trabajador::especialidad,Trabajador::fechaContratacion))
         println("Trabajadores ordenados por especialidad y ordenados por antiguedad son $trabajadoresOrdenados")
         list.add("Trabajadores ordenados por especialidad y ordenados por antiguedad son $trabajadoresOrdenados")
 
@@ -153,16 +153,16 @@ class ItvView(
         //Find All
         println("Todos los trabajadores")
         val b = trabajadorController.findAllTrabajadores()
-        println(b.toList())
+        println(b?.toList())
         println("Todos los propietarios")
         val pr = propietarioController.findAllPropietario()
-        println(pr.toList())
+        println(pr?.toList())
         println("Todos los vehiculos")
         val veh = vehiculoController.findAllVehiculo()
-        println(veh.toList())
+        println(veh?.toList())
         println("Todas las citas")
         val a = citaController.findAllCita()
-        println(a.toList())
+        println(a?.toList())
 
 
 

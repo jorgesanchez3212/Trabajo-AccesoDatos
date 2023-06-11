@@ -2,115 +2,146 @@ package repositories.trabajador
 
 import db.HibernateManager
 import db.HibernateManager.manager
+import exception.TrabajadorException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import models.Trabajador
 import mu.KotlinLogging
 import java.util.*
 import javax.persistence.TypedQuery
-
 class TrabajadorRepository : ITrabajadorRepository {
-    private var logger = KotlinLogging.logger {}
+    private val logger = KotlinLogging.logger {}
 
-
-
-    override suspend fun findByEmail(email: String): Trabajador? {
+    override suspend fun findByEmail(email: String): Result<Trabajador?> {
         logger.debug { "Buscando trabajador por su email" }
-        var encontrado:Trabajador? = null
-        HibernateManager.query {
-            var query: TypedQuery<Trabajador> = manager.createNamedQuery("Trabajador.findByEmail",  Trabajador::class.java)
-            query.setParameter("email", email)
-            encontrado = query.resultList.firstOrNull()
+        return try {
+            var encontrado: Trabajador? = null
+            HibernateManager.query {
+                val query: TypedQuery<Trabajador> = manager.createNamedQuery(
+                    "Trabajador.findByEmail",
+                    Trabajador::class.java
+                )
+                query.setParameter("email", email)
+                encontrado = query.resultList.firstOrNull()
+            }
+            Result.success(encontrado)
+        } catch (e: Exception) {
+            Result.failure(TrabajadorException("No se ha podido encontrar el trabajador por su email"))
         }
-        return encontrado
     }
 
-    override suspend fun findByUsername(username: String): Trabajador? {
+    override suspend fun findByUsername(username: String): Result<Trabajador?> {
         logger.debug { "Buscando trabajador por su username" }
-        var encontrado:Trabajador? = null
-        HibernateManager.query {
-            var query: TypedQuery<Trabajador> = manager.createNamedQuery("Trabajador.findByUsername",  Trabajador::class.java)
-            query.setParameter("username", username)
-            encontrado = query.resultList.firstOrNull()
+        return try {
+            var encontrado: Trabajador? = null
+            HibernateManager.query {
+                val query: TypedQuery<Trabajador> = manager.createNamedQuery(
+                    "Trabajador.findByUsername",
+                    Trabajador::class.java
+                )
+                query.setParameter("username", username)
+                encontrado = query.resultList.firstOrNull()
+            }
+            Result.success(encontrado)
+        } catch (e: Exception) {
+            Result.failure(TrabajadorException("No se ha podido encontrar el trabajador por su username"))
         }
-        return encontrado
     }
 
-    override suspend fun findById(id: UUID): Trabajador? {
+    override suspend fun findById(id: UUID): Result<Trabajador?> {
         logger.debug { "Buscando trabajador por el id" }
-        var encontrado: Trabajador? = null
-        HibernateManager.query {
-            encontrado = manager.find(Trabajador::class.java, id)
+        return try {
+            var encontrado: Trabajador? = null
+            HibernateManager.query {
+                encontrado = manager.find(Trabajador::class.java, id)
+            }
+            Result.success(encontrado)
+        } catch (e: Exception) {
+            Result.failure(TrabajadorException("No se ha podido encontrar el trabajador con el ID $id"))
         }
-        return encontrado
     }
 
-    override suspend fun save(item: Trabajador) : Trabajador {
+    override suspend fun save(entity: Trabajador): Result<Unit> {
         logger.debug { "Insertando trabajador" }
-        var trabajador : Trabajador? = null
-        HibernateManager.transaction {
-            trabajador = manager.merge(item)
+        return try {
+            HibernateManager.transaction {
+                manager.merge(entity)
+            }
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(TrabajadorException("No se ha podido insertar el trabajador $entity"))
         }
-        return trabajador!!
     }
 
-    override suspend fun update(entity: Trabajador) {
+    override suspend fun update(entity: Trabajador): Result<Unit> {
         logger.debug { "Actualizando trabajador con UUID: ${entity.uuid}" }
-        HibernateManager.transaction {
-            var existingTrabajador = manager.find(Trabajador::class.java, entity.uuid)
-            if (existingTrabajador != null) {
-                existingTrabajador.nombre = entity.nombre
-                existingTrabajador.telefono = entity.telefono
-                existingTrabajador.email = entity.email
-                existingTrabajador.username = entity.username
-                existingTrabajador.contraseña = entity.contraseña
-                existingTrabajador.fechaContratacion = entity.fechaContratacion
-                existingTrabajador.especialidad = entity.especialidad
-                existingTrabajador.salario = entity.salario
-                existingTrabajador.responsable = entity.responsable
+        return try {
+            HibernateManager.transaction {
+                val existingTrabajador = manager.find(Trabajador::class.java, entity.uuid)
+                if (existingTrabajador != null) {
+                    existingTrabajador.nombre = entity.nombre
+                    existingTrabajador.telefono = entity.telefono
+                    existingTrabajador.email = entity.email
+                    existingTrabajador.username = entity.username
+                    existingTrabajador.contraseña = entity.contraseña
+                    existingTrabajador.fechaContratacion = entity.fechaContratacion
+                    existingTrabajador.especialidad = entity.especialidad
+                    existingTrabajador.salario = entity.salario
+                    existingTrabajador.responsable = entity.responsable
 
-
-
-                manager.merge(existingTrabajador)
-                logger.debug { "Trabajador actualizado correctamente" }
-            } else {
-                logger.debug { "No se encontró ningún trabajador con el UUID: ${entity.uuid}. No se realizó ninguna actualización." }
+                    manager.merge(existingTrabajador)
+                    logger.debug { "Trabajador actualizado correctamente" }
+                    Result.success(Unit)
+                } else {
+                    logger.debug { "No se encontró ningún trabajador con el UUID: ${entity.uuid}. No se realizó ninguna actualización." }
+                    Result.failure(TrabajadorException("No se encontró ningún trabajador con el UUID: ${entity.uuid}."))
+                }
             }
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(TrabajadorException("No se ha podido actualizar el trabajador con el UUID: ${entity.uuid}"))
         }
     }
 
-
-    override suspend fun delete(uuid: UUID) {
-        logger.debug { "Eliminando trabajador"}
-        var result = false
-        HibernateManager.transaction {
-            val trabajador = manager.find(Trabajador::class.java, uuid)
-            trabajador?.let {
-                manager.remove(it)
-                result = true
+    override suspend fun delete(uuid: UUID): Result<Unit> {
+        logger.debug { "Eliminando trabajador con UUID: $uuid" }
+        return try {
+            HibernateManager.transaction {
+                val trabajador = manager.find(Trabajador::class.java, uuid)
+                trabajador?.let {
+                    manager.remove(it)
+                }
             }
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(TrabajadorException("No se ha podido eliminar el trabajador con el UUID: $uuid"))
         }
-
     }
 
-
-    override suspend fun findAll(): Flow<Trabajador> {
+    override suspend fun findAll(): Result<Flow<Trabajador>> {
         logger.debug { "Buscando todos los trabajadores" }
-        var lista = mutableListOf<Trabajador>()
-        HibernateManager.query {
-            var query: TypedQuery<Trabajador> = manager.createNamedQuery("Trabajador.findAll", Trabajador::class.java)
-            lista = query.resultList
+        return try {
+            var lista: List<Trabajador> = emptyList()
+            HibernateManager.query {
+                val query: TypedQuery<Trabajador> =
+                    manager.createNamedQuery("Trabajador.findAll", Trabajador::class.java)
+                lista = query.resultList
+            }
+            Result.success(lista.asFlow())
+        } catch (e: Exception) {
+            Result.failure(TrabajadorException("No se ha podido obtener la lista de trabajadores"))
         }
-        return lista.asFlow()
     }
 
-    fun deleteAll(): Boolean {
-        var eliminado = false
-        HibernateManager.transaction {
-            var query = manager.createQuery("delete from Trabajador")
-            query.executeUpdate()
-            eliminado = true
+    suspend fun deleteAll(): Result<Unit> {
+        return try {
+            HibernateManager.transaction {
+                val query = manager.createQuery("delete from Trabajador")
+                query.executeUpdate()
+            }
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(TrabajadorException("No se ha podido borrar los trabajadores"))
         }
-        return eliminado
     }
 }
