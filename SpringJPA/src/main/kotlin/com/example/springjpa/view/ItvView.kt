@@ -28,11 +28,10 @@ class ItvView
     private var logger = KotlinLogging.logger {}
 
 
-    suspend fun informes(){
-        // Añadimos trabajadores para hacer consultas
-        for (i in Data.trabajadores){
-            trabajadorController.saveTrabajador(i)
-        }
+    suspend fun informes(ruta: String) {
+       for (i in Data.trabajadores){
+           trabajadorController.saveTrabajador(i)
+       }
         val trabajadores = trabajadorController.findAllTrabajadores().toList()
         val list = mutableListOf<String>()
 
@@ -47,8 +46,8 @@ class ItvView
         list.add("Salario medio de todos los trabajadores que no son responsables es $salarioMedio")
 
         //El salario medio de todos los trabajadores agrupados por especialidad.
-        val salarioMedioAgrupadosPorEspecialidad = trabajadores.groupBy { it.especialidad }.mapValues {
-                entry -> entry.value.map { it.salario }.average() }
+        val salarioMedioAgrupadosPorEspecialidad =
+            trabajadores.groupBy { it.especialidad }.mapValues { entry -> entry.value.map { it.salario }.average() }
         println("Salario medio agrupados por especialidad es $salarioMedioAgrupadosPorEspecialidad")
         list.add("Salario medio agrupados por especialidad es $salarioMedioAgrupadosPorEspecialidad")
 
@@ -58,31 +57,31 @@ class ItvView
         list.add("La el trabajador/a con menos antigüedad $trabajadorMenosAntiguedad")
 
         // Trabajadores ordenados por especialidad y ordenados por antiguedad
-        val trabajadoresOrdenados = trabajadores.sortedWith(compareBy(Trabajador::especialidad,Trabajador::fechaContratacion))
+        val trabajadoresOrdenados =
+            trabajadores.sortedWith(compareBy(Trabajador::especialidad, Trabajador::fechaContratacion))
         println("Trabajadores ordenados por especialidad y ordenados por antiguedad son $trabajadoresOrdenados")
         list.add("Trabajadores ordenados por especialidad y ordenados por antiguedad son $trabajadoresOrdenados")
 
-        exportarJSON("./metadata",list)
+        exportarJSON("./metadata", list)
 
-        for (i in Data.trabajadores){
-            trabajadorController.borrarTrabajador(i)
+        trabajadores.forEach {
+            trabajadorController.borrarTrabajador(it)
         }
-
-
 
     }
 
-    fun exportarJSON(ruta: String, contenedores: List<String>) {
+
+    fun exportarJSON(ruta: String, consultas: List<String>) {
         logger.debug { "Exportando archivo json" }
         if (Files.exists(Path(ruta))) {
             val json = Json { prettyPrint = true }
             val fichero = File(ruta + File.separator + "consultas.json")
-            fichero.writeText(json.encodeToString(contenedores))
+            fichero.writeText(json.encodeToString(consultas))
         }else {
             Files.createDirectories(Path(ruta))
             val json = Json { prettyPrint = true }
             val fichero = File(ruta + File.separator + "consultas.json")
-            fichero.writeText(json.encodeToString(contenedores))
+            fichero.writeText(json.encodeToString(consultas))
         }
 
     }

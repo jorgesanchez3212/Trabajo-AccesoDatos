@@ -4,6 +4,7 @@ import kotlinx.serialization.Contextual
 import org.bson.codecs.pojo.annotations.BsonId
 import org.litote.kmongo.newId
 import kotlinx.serialization.Serializable
+import serializers.LocalDateSerializer
 import java.time.LocalDate
 
 @Serializable
@@ -15,7 +16,7 @@ data class Trabajador(
     val email : String,
     val username : String,
     val contraseña : ByteArray,
-    @Contextual
+    @Serializable(LocalDateSerializer::class)
     val fechaContratacion : LocalDate,
     val especialidad : String,
     val salario : Int,

@@ -12,6 +12,7 @@ import services.citas.CitaCache
 import services.informes.InformesCache
 import services.vehiculos.VehiculosCache
 import view.ItvView
+import java.io.File
 
 fun main() = runBlocking {
     val itv = ItvView(CitaController(CitaRepository(), CitaRepositoryCached(CitaCache())),
@@ -22,6 +23,6 @@ fun main() = runBlocking {
         )
 
     itv.añadirDatos()
-    itv.informes()
+    itv.informes("data" + File.separator+"trabajadores.csv")
 
 }

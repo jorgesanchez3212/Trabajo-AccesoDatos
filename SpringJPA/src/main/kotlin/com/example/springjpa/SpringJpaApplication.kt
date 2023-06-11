@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
+import java.io.File
 
 @SpringBootApplication
 class SpringJpaApplication
@@ -16,7 +17,7 @@ class SpringJpaApplication
     override fun run(vararg args: String?) = runBlocking {
         vista.borrarTodo()
         vista.añadirDatos()
-        vista.informes()
+        vista.informes("data"+ File.separator+"trabajadores.csv")
     }
 
 }

@@ -1,0 +1,7 @@
+_id;nombre;teléfono;email;username;contraseña;fechaContratacion;especialidad;salario;responsable
+1;Juan Pérez;123456789;juan121@gmail.com;juan1perez12;password123;2020-05-15;MOTOR;2800;true
+2;María López;987654321;maria1@gmail.com;maria1lopez;password123;2021-02-28;MECANICA;1600;false
+3;Carlos Ramírez;555555555;carlos1@gmail.com;carlos1ramirez;password123;2019-10-10;ELECTRICIDAD;1900;false
+4;Laura García;111111111;laura1@gmail.com;laura1garcia;password123;2022-06-05;INTERIOR;1750;false
+5;Pedro Martínez;999999999;pedro1@gmail.com;pedro1martinez;password123;2020-12-01;MOTOR;1700;false
+6;Ana Torres;777777777;ana1@gmail.com;ana1torres;password123;2021-04-18;ELECTRICIDAD;1800;false

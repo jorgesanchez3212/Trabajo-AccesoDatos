@@ -7,9 +7,10 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import models.Trabajador
 import mu.KotlinLogging
-import org.litote.kmongo.newId
 import java.io.File
+import java.nio.file.Files
 import java.time.LocalDate
+import kotlin.io.path.Path
 
 class ItvView(
     private val citaController : CitaController,
@@ -21,7 +22,11 @@ class ItvView(
     private var logger = KotlinLogging.logger {}
 
 
-    suspend fun informes(){
+    suspend fun informes(ruta: String){
+        val lista = leerCSV(ruta)
+        lista.forEach {
+            trabajadorController.saveTrabajador(it)
+        }
         val trabajadores = trabajadorController.findAllTrabajadores().toList()
         val list = mutableListOf<String>()
 
@@ -52,16 +57,77 @@ class ItvView(
         list.add("Trabajadores ordenados por especialidad y ordenados por antiguedad son $trabajadoresOrdenados")
 
         exportarJSON("./metadata",list)
+        exportarJSONTrabajadores("./metadata", lista)
 
-
+        lista.forEach {
+            trabajadorController.borrarTrabajador(it._id)
+        }
 
     }
 
     fun exportarJSON(ruta: String, contenedores: List<String>) {
         logger.debug { "Exportando archivo json" }
-        val json = Json { prettyPrint = true }
-        val fichero = File(ruta + File.separator + "consultas.json")
-        fichero.writeText(json.encodeToString(contenedores))
+        if (Files.exists(Path(ruta))) {
+            val json = Json { prettyPrint = true }
+            val fichero = File(ruta + File.separator + "consultas.json")
+            fichero.writeText(json.encodeToString(contenedores))
+        }else {
+            Files.createDirectories(Path(ruta))
+            val json = Json { prettyPrint = true }
+            val fichero = File(ruta + File.separator + "consultas.json")
+            fichero.writeText(json.encodeToString(contenedores))
+        }
+
+    }
+
+    fun exportarJSONTrabajadores(ruta: String, trabajadores: List<Trabajador>) {
+        logger.debug { "Exportando archivo json" }
+        if (Files.exists(Path(ruta))) {
+            val json = Json { prettyPrint = true }
+            val fichero = File(ruta + File.separator + "trabajadores.json")
+            fichero.writeText(json.encodeToString(trabajadores))
+        }else {
+            Files.createDirectories(Path(ruta))
+            val json = Json { prettyPrint = true }
+            val fichero = File(ruta + File.separator + "trabajadores.json")
+            fichero.writeText(json.encodeToString(trabajadores))
+        }
+
+    }
+
+
+
+    fun leerCSV(ruta: String) : List<Trabajador>{
+        logger.debug{"Leyendo archivo csv"}
+            val fichero = File(ruta)
+            if(fichero.exists()&&ruta.endsWith(".csv")) {
+                if(fichero.readLines().take(1).first().split(";").size == 10) {
+                    return fichero.readLines()
+                        .drop(1)
+                        .map { trabajadores -> trabajadores.split(";") }
+                        .map {
+                            it.map { it.trim() }
+                            Trabajador(
+                                _id = it[0].toString(),
+                                nombre = it[1],
+                                teléfono = it[2].toInt(),
+                                email = it[3],
+                                username = it[4],
+                                contraseña = it[5].toByteArray(),
+                                fechaContratacion = LocalDate.parse(it[6]),
+                                especialidad = it[7],
+                                salario = it[8].toInt(),
+                                responsable = it[9].toBoolean()
+                            )
+                        }
+                }else{
+                    val f = fichero.readLines().first()
+                    println(f)
+                    throw Exception("La cabecera no es igual")
+                }
+            }else {
+                throw Exception("El formato no es correcto")
+            }
     }
 
     suspend fun  añadirDatos(){

@@ -7,17 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
+import java.io.File
 
 @SpringBootApplication
 class ItvSpringApplication
 @Autowired constructor(
     private val vista : ItvView,
-    private val watchers : Watchers
 ) : CommandLineRunner{
     override fun run(vararg args: String?) = runBlocking {
-        //vista.borrarTodo()
+        vista.borrarTodo()
         vista.añadirDatos()
-        vista.informes()
+        vista.informes("data" + File.separator+"trabajadores.csv")
     }
 
 }
