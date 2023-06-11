@@ -118,7 +118,7 @@ class InformeControllerTest {
         controllerVehiculo.saveVehiculo(vehiculo)
 
         controller.saveInforme(entity)
-        var res = controller.findAllInforme().toList()
+        var res = controller.findAllInforme()!!.toList()
         assertAll(
             { assertEquals(1, res.size) }
         )
@@ -217,7 +217,7 @@ class InformeControllerTest {
             { assertNotNull(en) }
         )
         controller.borrarInforme(entity.uuid)
-        var listBorrar = controller.findAllInforme().toList()
+        var listBorrar = controller.findAllInforme()!!.toList()
 
         assertAll(
             { assertEquals(0,listBorrar.size) }

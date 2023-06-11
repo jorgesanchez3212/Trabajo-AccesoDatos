@@ -31,7 +31,7 @@ class PropietarioControllerTest {
     fun findAll() = runTest {
 
         controller.savePropietario(entity)
-        var res = controller.findAllPropietario().toList()
+        var res = controller.findAllPropietario()!!.toList()
         assertAll(
             { assertEquals(1, res.size) }
         )
@@ -42,7 +42,7 @@ class PropietarioControllerTest {
     fun create() = runTest {
 
         controller.savePropietario(entity)
-        var list = controller.findAllPropietario().toList()
+        var list = controller.findAllPropietario()!!.toList()
         assertAll(
             { assertEquals(1, list.size) }
         )
@@ -61,7 +61,7 @@ class PropietarioControllerTest {
         )
         controller.savePropietario(entity)
         controller.updatePropietario(entity1)
-        var list = controller.findAllPropietario().toList()
+        var list = controller.findAllPropietario()!!.toList()
         assertAll(
             { assertNotEquals(entity1.nombre, entity.nombre) }
         )
@@ -73,12 +73,12 @@ class PropietarioControllerTest {
     fun delete() = runTest {
 
         controller.savePropietario(entity)
-        var list = controller.findAllPropietario().toList()
+        var list = controller.findAllPropietario()!!.toList()
         assertAll(
             { assertEquals(1, list.size) }
         )
         repository.delete(entity.uuid)
-        var listBorrar = controller.findAllPropietario().toList()
+        var listBorrar = controller.findAllPropietario()!!.toList()
 
         assertAll(
             { assertNotEquals(listBorrar.size, list.size) }

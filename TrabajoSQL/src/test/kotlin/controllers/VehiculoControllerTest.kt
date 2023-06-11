@@ -35,7 +35,7 @@ class VehiculoControllerTest {
     fun findAll() = runTest {
 
         controller.saveVehiculo(entity)
-        var res = controller.findAllVehiculo().toList()
+        var res = controller.findAllVehiculo()!!.toList()
         assertAll(
             { assertEquals(1, res.size) }
         )
@@ -46,7 +46,7 @@ class VehiculoControllerTest {
     fun create() = runTest {
 
         controller.saveVehiculo(entity)
-        var list = controller.findAllVehiculo().toList()
+        var list = controller.findAllVehiculo()!!.toList()
         assertAll(
             { assertEquals(1, list.size) }
         )
@@ -66,7 +66,7 @@ class VehiculoControllerTest {
         )
         controller.saveVehiculo(entity)
         controller.updateVehiculo(entity1)
-        var list = controller.findAllVehiculo().toList()
+        var list = controller.findAllVehiculo()!!.toList()
         assertAll(
             { assertNotEquals(entity.modelo,entity1.modelo) }
         )
@@ -78,12 +78,12 @@ class VehiculoControllerTest {
     fun delete() = runTest {
 
         controller.saveVehiculo(entity)
-        var list = controller.findAllVehiculo().toList()
+        var list = controller.findAllVehiculo()!!.toList()
         assertAll(
             { assertEquals(1, list.size) }
         )
         controller.borrarVehiculo(entity.uuid)
-        var listBorrar = controller.findAllVehiculo().toList()
+        var listBorrar = controller.findAllVehiculo()!!.toList()
 
         assertAll(
             { assertNotEquals(listBorrar.size, list.size) }

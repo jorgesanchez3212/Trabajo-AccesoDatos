@@ -28,14 +28,14 @@ class TrabajadorRepositoryTest {
 
 
     @BeforeEach
-    fun setUp() {
+    fun setUp(): Unit = runBlocking {
         repository.deleteAll()
     }
 
     @Test
-    fun findAll()  = runBlocking {
+    fun findAll(): Unit = runBlocking {
         repository.save(entity)
-        val list = repository.findAll().toList()
+        val list = repository.findAll().getOrNull()!!.toList()
         assertAll(
             { assertNotNull(list) },
             { assertEquals(1, list.size) }
@@ -47,7 +47,7 @@ class TrabajadorRepositoryTest {
     @Test
     fun findById() = runBlocking {
         val tr = repository.save(entity)
-        var encontrado = repository.findById(UUID.fromString("8f121bdd-238a-4c59-a7e3-0c1f382aefb2"))
+        var encontrado = repository.findById(UUID.fromString("8f121bdd-238a-4c59-a7e3-0c1f382aefb2")).getOrNull()
         assertAll(
             { assertNotNull(encontrado) },
             { assertEquals(encontrado?.email,entity.email) },
@@ -60,14 +60,14 @@ class TrabajadorRepositoryTest {
 
 
     @Test
-    fun save() = runBlocking {
+    fun save(): Unit = runBlocking {
         val tr = repository.save(entity)
-        val trabajadorr = repository.findById(tr.uuid)
+        val trabajadorr = repository.findById(entity.uuid).getOrNull()
         assertAll(
             { assertNotNull(trabajadorr) },
-            { assertEquals(tr.email, trabajadorr?.email) },
-            { assertEquals(tr?.especialidad,trabajadorr?.especialidad) },
-            { assertEquals(tr?.nombre,trabajadorr?.nombre) }
+            { assertEquals(entity.email, trabajadorr?.email) },
+            { assertEquals(entity?.especialidad,trabajadorr?.especialidad) },
+            { assertEquals(entity?.nombre,trabajadorr?.nombre) }
         )
         repository.delete(entity.uuid)
     }
@@ -77,12 +77,12 @@ class TrabajadorRepositoryTest {
     fun update() = runBlocking {
         val tr = repository.save(entity)
         repository.update(entity)
-        val trabajadores = repository.findById(tr.uuid)
+        val trabajadores = repository.findById(entity.uuid).getOrNull()
         assertAll(
             { assertNotNull(trabajadores) },
-            { assertEquals(tr.uuid, trabajadores?.uuid) }
+            { assertEquals(entity.uuid, trabajadores?.uuid) }
         )
-        repository.delete(tr.uuid)
+        repository.delete(entity.uuid)
 
     }
 
@@ -90,10 +90,10 @@ class TrabajadorRepositoryTest {
     @Test
     fun delete() = runBlocking {
         val tr = repository.save(entity)
-        val trabajadorr = repository.findById(tr.uuid)
-        repository.delete(tr.uuid)
+        val trabajadorr = repository.findById(entity.uuid).getOrNull()
+        repository.delete(entity.uuid)
 
-        val trabajadorrr = repository.findById(tr.uuid)
+        val trabajadorrr = repository.findById(entity.uuid).getOrNull()
 
             assertNotNull(trabajadorr)
             assertNull(trabajadorrr)

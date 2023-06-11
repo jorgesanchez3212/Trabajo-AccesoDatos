@@ -89,7 +89,7 @@ class CitaControllerTest {
         controllerVehiculo.saveVehiculo(vehiculo)
 
         controller.saveCita(entity)
-        var res = controller.findAllCita().toList()
+        var res = controller.findAllCita()!!.toList()
         assertAll(
             {assertEquals(res[0].uuid,entity.uuid)},
             {assertEquals(res[0].idPropietario,entity.idPropietario)},
@@ -154,7 +154,7 @@ class CitaControllerTest {
             { assertNotNull(en) }
         )
         controller.borrarCita(entity.uuid)
-        var listBorrar = controller.findAllCita().toList()
+        var listBorrar = controller.findAllCita()!!.toList()
 
         assertAll(
             { assertEquals(0,listBorrar.size) }

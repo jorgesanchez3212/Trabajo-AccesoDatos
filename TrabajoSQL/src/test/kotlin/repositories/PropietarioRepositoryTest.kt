@@ -21,14 +21,14 @@ class PropietarioRepositoryTest {
     )
 
     @BeforeEach
-    fun setUp() {
+    fun setUp(): Unit = runBlocking {
         repository.deleteAll()
     }
 
     @Test
-    fun findAll()  = runBlocking {
+    fun findAll(): Unit = runBlocking {
         repository.save(entity)
-        val list = repository.findAll().toList()
+        val list = repository.findAll().getOrNull()!!.toList()
         Assertions.assertAll(
             { Assertions.assertNotNull(list) },
             { Assertions.assertEquals(1, list.size) }
@@ -39,7 +39,7 @@ class PropietarioRepositoryTest {
     @Test
     fun findById() = runBlocking {
         val tr = repository.save(entity)
-        var encontrado = repository.findById(UUID.fromString("8f121bdd-238a-4c59-a7e3-0c1f382aefb2"))
+        var encontrado = repository.findById(UUID.fromString("8f121bdd-238a-4c59-a7e3-0c1f382aefb2")).getOrNull()
         Assertions.assertAll(
             { Assertions.assertNotNull(encontrado) },
             { Assertions.assertEquals(encontrado?.dni,entity.dni) },
@@ -51,38 +51,38 @@ class PropietarioRepositoryTest {
     }
 
     @Test
-    fun save() = runBlocking {
+    fun save(): Unit = runBlocking {
         val tr = repository.save(entity)
-        val entityy = repository.findById(tr.uuid)
+        val entityy = repository.findById(entity.uuid).getOrNull()
         Assertions.assertAll(
             { Assertions.assertNotNull(entityy) },
-            { Assertions.assertEquals(tr.dni, entityy?.dni) },
-            { Assertions.assertEquals(tr?.nombre,entityy?.nombre) },
-            { Assertions.assertEquals(tr?.teléfono,entityy?.teléfono) }
+            { Assertions.assertEquals(entity.dni, entityy?.dni) },
+            { Assertions.assertEquals(entity?.nombre,entityy?.nombre) },
+            { Assertions.assertEquals(entity?.teléfono,entityy?.teléfono) }
         )
         repository.delete(entity.uuid)
     }
 
     @Test
-    fun update() = runBlocking {
+    fun update(): Unit = runBlocking {
         val tr = repository.save(entity)
         repository.update(entity)
-        val entityy = repository.findById(tr.uuid)
+        val entityy = repository.findById(entity.uuid).getOrNull()
         Assertions.assertAll(
             { Assertions.assertNotNull(entityy) },
-            { Assertions.assertEquals(tr.uuid, entityy?.uuid) }
+            { Assertions.assertEquals(entity.uuid, entityy?.uuid) }
         )
-        repository.delete(tr.uuid)
+        repository.delete(entity.uuid)
 
     }
 
     @Test
     fun delete() = runBlocking {
         val tr = repository.save(entity)
-        val entityy = repository.findById(tr.uuid)
-        repository.delete(tr.uuid)
+        val entityy = repository.findById(entity.uuid).getOrNull()
+        repository.delete(entity.uuid)
 
-        val entityyy = repository.findById(tr.uuid)
+        val entityyy = repository.findById(entity.uuid).getOrNull()
 
         Assertions.assertNotNull(entityy)
         Assertions.assertNull(entityyy)

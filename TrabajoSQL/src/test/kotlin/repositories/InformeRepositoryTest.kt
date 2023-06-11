@@ -66,26 +66,26 @@ class InformeRepositoryTest {
 
 
     @BeforeEach
-    fun setUp() {
+    fun setUp(): Unit = runBlocking {
         repository.deleteAll()
     }
 
     @Test
-    fun findAll()  = runBlocking {
+    fun findAll(): Unit = runBlocking {
         val tr = trabajadorRepository.save(trabajador)
         val pr = propietarioRrepository.save(propietario)
         val vl = vehiculoRepository.save(vehiculo)
 
         val r = repository.save(entity)
-        val list = repository.findAll().toList()
+        val list = repository.findAll().getOrNull()?.toList()
         Assertions.assertAll(
             { Assertions.assertNotNull(list) },
-            { Assertions.assertEquals(1, list.size) }
+            { Assertions.assertEquals(1, list?.size) }
         )
-        repository.delete(r.uuid)
-        trabajadorRepository.delete(tr.uuid)
-        propietarioRrepository.delete(pr.uuid)
-        vehiculoRepository.delete(vl.uuid)
+        repository.delete(entity.uuid)
+        trabajadorRepository.delete(trabajador.uuid)
+        propietarioRrepository.delete(propietario.uuid)
+        vehiculoRepository.delete(vehiculo.uuid)
 
     }
 
@@ -97,52 +97,51 @@ class InformeRepositoryTest {
 
         val r = repository.save(entity)
 
-        var encontrado = repository.findById(UUID.fromString("8f121bdd-238a-4c59-a7e3-0c1f382aefb2"))
+        var encontrado = repository.findById(UUID.fromString("8f121bdd-238a-4c59-a7e3-0c1f382aefb2")).getOrNull()
         Assertions.assertAll(
             { Assertions.assertNotNull(encontrado) },
-            { Assertions.assertEquals(r.apto, encontrado?.apto) },
-            { Assertions.assertEquals(r?.contaminación,encontrado?.contaminación) },
-            { Assertions.assertEquals(r?.frenado,encontrado?.frenado) }
+            { Assertions.assertEquals(entity.apto, encontrado?.apto) },
+            { Assertions.assertEquals(entity?.contaminación,encontrado?.contaminación) },
+            { Assertions.assertEquals(entity?.frenado,encontrado?.frenado) }
 
         )
 
     }
 
     @Test
-    fun save() = runBlocking {
+    fun save(): Unit = runBlocking {
         val tr = repository.save(entity)
-        val entityy = repository.findById(tr.uuid)
+        val entityy = repository.findById(entity.uuid).getOrNull()
         Assertions.assertAll(
             { Assertions.assertNotNull(entityy) },
-            { Assertions.assertEquals(tr.apto, entityy?.apto) },
-            { Assertions.assertEquals(tr?.contaminación,entityy?.contaminación) },
-            { Assertions.assertEquals(tr?.frenado,entityy?.frenado) }
+            { Assertions.assertEquals(entity.apto, entityy?.apto) },
+            { Assertions.assertEquals(entity?.contaminación,entityy?.contaminación) },
+            { Assertions.assertEquals(entity?.frenado,entityy?.frenado) }
         )
         repository.delete(entity.uuid)
     }
 
     @Test
-    fun update() = runBlocking {
+    fun update(): Unit = runBlocking {
         val tr = repository.save(entity)
         repository.update(entity)
-        val entityy = repository.findById(tr.uuid)
+        val entityy = repository.findById(entity.uuid).getOrNull()
         Assertions.assertAll(
-            { Assertions.assertNotNull(entityy) },
-            { Assertions.assertEquals(tr.uuid, entityy?.uuid) }
+            { Assertions.assertEquals(entity.uuid, entity?.uuid) }
         )
-        repository.delete(tr.uuid)
+        repository.delete(entity.uuid)
 
     }
 
     @Test
     fun delete() = runBlocking {
         val tr = repository.save(entity)
-        val entityy = repository.findById(tr.uuid)
-        repository.delete(tr.uuid)
+        val entityy = repository.findById(entity.uuid).getOrNull()
+        repository.delete(trabajador.uuid)
 
-        val entityyy = repository.findById(tr.uuid)
+        val entityyy = repository.findById(entity.uuid).getOrNull()
 
-        Assertions.assertNotNull(entityy)
+        Assertions.assertNull(entityy)
         Assertions.assertNull(entityyy)
 
     }

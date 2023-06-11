@@ -52,7 +52,7 @@ class TrabajadorControllerTest {
     fun findAllTrabajadores() = runTest {
         borrarDatosTabla()
         controller.saveTrabajador(trabajador)
-        var res = controller.findAllTrabajadores().toList()
+        var res = controller.findAllTrabajadores()!!.toList()
         assertAll(
             { assertEquals(1, res.size) }
         )
@@ -63,7 +63,7 @@ class TrabajadorControllerTest {
     fun createTrabajador() = runTest {
         borrarDatosTabla()
         controller.saveTrabajador(trabajador)
-        var list = controller.findAllTrabajadores().toList()
+        var list = controller.findAllTrabajadores()!!.toList()
         assertAll(
             { assertEquals(1, list.size) }
         )
@@ -87,7 +87,7 @@ class TrabajadorControllerTest {
         )
         controller.saveTrabajador(trabajador)
         controller.updateTrabajador(trabajador1)
-        var list = controller.findAllTrabajadores().toList()
+        var list = controller.findAllTrabajadores()!!.toList()
         assertAll(
             { assertNotEquals(trabajador1.nombre, trabajador.nombre) }
         )
@@ -99,12 +99,12 @@ class TrabajadorControllerTest {
     fun deleteTrabajador() = runTest {
         borrarDatosTabla()
         controller.saveTrabajador(trabajador)
-        var list = controller.findAllTrabajadores().toList()
+        var list = controller.findAllTrabajadores()!!.toList()
         assertAll(
             { assertEquals(1, list.size) }
         )
         repository.delete(trabajador.uuid)
-        var listBorrar = controller.findAllTrabajadores().toList()
+        var listBorrar = controller.findAllTrabajadores()!!.toList()
 
         assertAll(
             { assertNotEquals(listBorrar.size, list.size) }
