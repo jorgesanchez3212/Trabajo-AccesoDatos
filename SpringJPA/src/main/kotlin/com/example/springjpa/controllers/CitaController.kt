@@ -28,30 +28,36 @@ class CitaController
 
 
     suspend fun saveCita(entity: Cita) {
+
+        println("Estamos en el metodo save")
+        val trabajador = entity.trabajador // Obtenemos el trabajador asignado a la cita
+
+        val intervaloFin = entity.fechaHora.plusMinutes(30)
+        // Verificamos el límite de 4 citas por intervalo para el trabajador
+        val citas = citaRepository.findAll()
+        val citasIntervaloTrabjador = citas.filter { cita ->
+            cita.trabajador == trabajador && cita.fechaHora.toString() in entity.fechaHora.toString()..intervaloFin.toString()
+        }.toList()
+        if (citasIntervaloTrabjador.size >= 4) {
+            throw CitaControllerException("El trabajador no tiene hueco disponible en este intervalo de 30 minutos")
+        }
+
+        // Verificamos el límite de 8 citas en el mismo intervalo
+        val citasIntervalo = citas.filter { cita -> cita.fechaHora in entity.fechaHora..intervaloFin }.toList()
+        if (citasIntervalo.size >= 8) {
+            throw CitaControllerException("No hay disponibilidad de citas en este intervalo de 30 minutos")
+        }
+
+        println("Vamos a añadir a la cache")
         withContext(Dispatchers.IO) {
-            val trabajador = entity.trabajador // Obtén el trabajador asignado a la cita
-
-            val intervaloFin = entity.fechaHora.plusMinutes(30)
-            // Verificar el límite de 4 citas por intervalo para el trabajador
-            val citasIntervaloTrabajador = citaRepository.findCitasByTrabajadorAndFechaHoraBetween(trabajador, entity.fechaHora,intervaloFin)
-            if (citasIntervaloTrabajador.size >= 4) {
-                throw CitaControllerException("El trabajador no tiene hueco disponible en este intervalo de 30 minutos")
-            }
-
-            // Verificar el límite de 8 citas en el mismo intervalo
-            val citasIntervalo = citaRepository.findCitasByFechaHoraBetween(entity.fechaHora,intervaloFin)
-            if (citasIntervalo.size >= 8) {
-                throw CitaControllerException("No hay disponibilidad de citas en este intervalo de 30 minutos")
-            }
-
-            // Guardar la cita en la base de datos y en el caché
-            launch {
-                citaRepository.save(entity)
-            }
             launch {
                 cache.save(entity)
             }
         }
+
+        println("Vamos a añadir a la base de datos")
+        citaRepository.save(entity)
+
     }
 
 

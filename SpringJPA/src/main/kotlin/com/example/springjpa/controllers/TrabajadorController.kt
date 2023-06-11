@@ -99,7 +99,4 @@ class TrabajadorController
     suspend fun deleteAll(){
         trabajadoresRepository.deleteAll()
     }
-
-
-
 }

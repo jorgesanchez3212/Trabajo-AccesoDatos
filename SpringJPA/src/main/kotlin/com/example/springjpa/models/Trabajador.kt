@@ -12,7 +12,7 @@ import java.util.*
 @Serializable
 data class Trabajador(
     @Id
-    var uuid: UUID = UUID.randomUUID(),
+    var uuid: UUID,
     var nombre : String,
     var telefono : Int,
     var email : String,

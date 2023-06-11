@@ -12,7 +12,7 @@ import java.util.*
 @Serializable
 data class Propietario(
     @Id
-    var uuid: UUID = UUID.randomUUID(),
+    var uuid: UUID ,
     var dni : String,
     var nombre: String,
     var apellidos : String,

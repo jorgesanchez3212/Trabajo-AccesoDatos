@@ -13,7 +13,7 @@ import java.util.*
 @Serializable
 data class Cita(
     @Id
-    var uuid: UUID = UUID.randomUUID(),
+    var uuid: UUID,
     @Serializable(with = LocalDateTimeSerializer::class)
     var fechaHora : LocalDateTime,
     @OneToOne

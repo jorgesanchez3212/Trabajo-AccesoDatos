@@ -14,7 +14,7 @@ import java.util.*
 @Serializable
 data class Vehiculo(
     @Id
-    var uuid: UUID = UUID.randomUUID(),
+    var uuid: UUID,
     var marca: String,
     var modelo : String,
     var matricula : String,

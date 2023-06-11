@@ -10,7 +10,7 @@ import java.util.*
 @Serializable
 data class Informe(
     @Id
-    var uuid: UUID = UUID.randomUUID(),
+    var uuid: UUID ,
     var frenado : Int,
     var contaminación : Double,
     var aptoFrenado: Boolean,

@@ -70,6 +70,9 @@ class VehiculoController
     }
 
 
+    suspend fun deleteAll(){
+        vehiculoRepository.deleteAll()
+    }
 
 
 }
