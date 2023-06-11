@@ -1,7 +1,6 @@
 package controllers
 
 import db.Data
-import db.MongoDbManager
 import kotlinx.coroutines.flow.toList
 import org.junit.jupiter.api.Test
 import kotlinx.coroutines.test.runTest
@@ -18,6 +17,7 @@ import services.citas.CitaCache
 import services.vehiculos.VehiculosCache
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.util.*
 
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -42,9 +42,9 @@ class CitaControllerTest {
 
 
     val trabajador = Trabajador(
-        _id = "5",
+        uuid = UUID.fromString("8f121bdd-238a-4c59-a7e3-0c1f382aefb7"),
         nombre = "Juan Pérez",
-        teléfono = 123456789,
+        telefono = 123456789,
         email = "juan@gmail.com",
         username = "juanperez",
         contraseña = "password123".toByteArray(),
@@ -56,7 +56,7 @@ class CitaControllerTest {
 
 
     val propietario = Propietario(
-        _id = "5",
+        uuid = UUID.fromString("8f121bdd-238a-4c59-a7e3-0c1f382aefb7"),
         dni = "67890123F",
         nombre = "MiAbuela",
         apellidos = "Gómez Ruiz",
@@ -64,7 +64,7 @@ class CitaControllerTest {
     )
 
     val vehiculo = Vehiculo(
-        _id = "5",
+        uuid = UUID.fromString("8f121bdd-238a-4c59-a7e3-0c1f382aefb7"),
         marca = "Toyota",
         modelo = "Corolla",
         matricula = "ABC123",
@@ -72,19 +72,17 @@ class CitaControllerTest {
         fechaUltimaRevision = LocalDate.of(2022, 12, 30)
     )
 
+    val fechaInicio = LocalDateTime.now()
     val entity =  Cita(
-        fechaHora = Data.fechaInicio.plusMinutes(30),
-        idTrabajador = "7",
-        idVehiculo = "7",
-        idPropietario = "7"
+        fechaHora = fechaInicio.plusMinutes(30),
+        idTrabajador = trabajador,
+        idVehiculo = vehiculo,
+        idPropietario = propietario
     )
 
     @Test
     fun findAll() = runTest {
-        MongoDbManager.database.getCollection<Cita>().drop()
-        MongoDbManager.database.getCollection<Vehiculo>().drop()
-        MongoDbManager.database.getCollection<Trabajador>().drop()
-        MongoDbManager.database.getCollection<Propietario>().drop()
+
 
         controllerPropietario.savePropietario(propietario)
         controllerTrabajador.saveTrabajador(trabajador)
@@ -93,90 +91,78 @@ class CitaControllerTest {
         controller.saveCita(entity)
         var res = controller.findAllCita().toList()
         assertAll(
-            {assertEquals(res[0]._id,entity._id)},
+            {assertEquals(res[0].uuid,entity.uuid)},
             {assertEquals(res[0].idPropietario,entity.idPropietario)},
             { assertEquals(1, res.size) }
         )
-        controller.borrarCita(entity._id)
-        controllerPropietario.borrarPropietario(propietario._id)
-        controllerTrabajador.borrarTrabajador(trabajador._id)
-        controllerVehiculo.borrarVehiculo(vehiculo._id)
+        controller.borrarCita(entity.uuid)
+        controllerPropietario.borrarPropietario(propietario.uuid)
+        controllerTrabajador.borrarTrabajador(trabajador.uuid)
+        controllerVehiculo.borrarVehiculo(vehiculo.uuid)
     }
 
 
     @Test
     fun create() = runTest {
-        MongoDbManager.database.getCollection<Cita>().drop()
-        MongoDbManager.database.getCollection<Vehiculo>().drop()
-        MongoDbManager.database.getCollection<Trabajador>().drop()
-        MongoDbManager.database.getCollection<Propietario>().drop()
 
         controllerPropietario.savePropietario(propietario)
         controllerTrabajador.saveTrabajador(trabajador)
         controllerVehiculo.saveVehiculo(vehiculo)
 
         controller.saveCita(entity)
-        var entity1 = controller.findByIdCita(entity._id)
+        var entity1 = controller.findByIdCita(entity.uuid)
         assertAll(
             { assertNotNull( entity1)}
         )
-        controller.borrarCita(entity._id)
-        controllerPropietario.borrarPropietario(propietario._id)
-        controllerTrabajador.borrarTrabajador(trabajador._id)
-        controllerVehiculo.borrarVehiculo(vehiculo._id)
+        controller.borrarCita(entity.uuid)
+        controllerPropietario.borrarPropietario(propietario.uuid)
+        controllerTrabajador.borrarTrabajador(trabajador.uuid)
+        controllerVehiculo.borrarVehiculo(vehiculo.uuid)
     }
 
 
     @Test
     fun findById() = runTest {
-        MongoDbManager.database.getCollection<Cita>().drop()
-        MongoDbManager.database.getCollection<Vehiculo>().drop()
-        MongoDbManager.database.getCollection<Trabajador>().drop()
-        MongoDbManager.database.getCollection<Propietario>().drop()
 
         controllerPropietario.savePropietario(propietario)
         controllerTrabajador.saveTrabajador(trabajador)
         controllerVehiculo.saveVehiculo(vehiculo)
 
         controller.saveCita(entity)
-        var entity1 = controller.findByIdCita(entity._id)
+        var entity1 = controller.findByIdCita(entity.uuid)
         assertAll(
             { assertNotNull( entity1)},
-            { assertEquals(entity._id, entity1?._id) }
+            { assertEquals(entity.uuid, entity1?.uuid) }
         )
-        controller.borrarCita(entity._id)
-        controllerPropietario.borrarPropietario(propietario._id)
-        controllerTrabajador.borrarTrabajador(trabajador._id)
-        controllerVehiculo.borrarVehiculo(vehiculo._id)
+        controller.borrarCita(entity.uuid)
+        controllerPropietario.borrarPropietario(propietario.uuid)
+        controllerTrabajador.borrarTrabajador(trabajador.uuid)
+        controllerVehiculo.borrarVehiculo(vehiculo.uuid)
     }
 
 
     @Test
     fun delete() = runTest {
-        MongoDbManager.database.getCollection<Cita>().drop()
-        MongoDbManager.database.getCollection<Vehiculo>().drop()
-        MongoDbManager.database.getCollection<Trabajador>().drop()
-        MongoDbManager.database.getCollection<Propietario>().drop()
 
         controllerPropietario.savePropietario(propietario)
         controllerTrabajador.saveTrabajador(trabajador)
         controllerVehiculo.saveVehiculo(vehiculo)
 
         controller.saveCita(entity)
-        var en = controller.findByIdCita(entity._id)
+        var en = controller.findByIdCita(entity.uuid)
         assertAll(
             { assertNotNull(en) }
         )
-        controller.borrarCita(entity._id)
+        controller.borrarCita(entity.uuid)
         var listBorrar = controller.findAllCita().toList()
 
         assertAll(
             { assertEquals(0,listBorrar.size) }
         )
 
-        controllerPropietario.borrarPropietario(propietario._id)
-        controllerTrabajador.borrarTrabajador(trabajador._id)
-        controllerVehiculo.borrarVehiculo(vehiculo._id)
+        controllerPropietario.borrarPropietario(propietario.uuid)
+        controllerTrabajador.borrarTrabajador(trabajador.uuid)
+        controllerVehiculo.borrarVehiculo(vehiculo.uuid)
     }
 
 
