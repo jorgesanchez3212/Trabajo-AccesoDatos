@@ -7,7 +7,7 @@ import services.vehiculos.VehiculosCache
 
 class VehiculoRepositoryCached(
     private val vehiculosCache: VehiculosCache
-)  : IVehiculoRepository{
+)  : IVehiculoRepositoryCached{
     override suspend fun findAll(): Flow<Vehiculo> {
         return vehiculosCache.cache.asMap().values.asFlow()
     }

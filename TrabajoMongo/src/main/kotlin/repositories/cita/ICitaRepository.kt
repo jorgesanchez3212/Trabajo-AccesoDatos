@@ -6,6 +6,6 @@ import repositories.CrudRepository
 import java.time.LocalDateTime
 
 interface ICitaRepository : CrudRepository<Cita,String> {
-    suspend fun findByTrabajadorAndIntervalo(trabajador: String, fechaHora: LocalDateTime): List<Cita>
-    suspend fun findByIntervalo(fechaHora: LocalDateTime): List<Cita>
+    suspend fun findByTrabajadorAndIntervalo(trabajador: String, fechaHora: LocalDateTime): Result<List<Cita>>
+    suspend fun findByIntervalo(fechaHora: LocalDateTime): Result<List<Cita>>
 }

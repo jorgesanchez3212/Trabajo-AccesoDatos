@@ -8,6 +8,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import models.Vehiculo
 import repositories.vehiculo.IVehiculoRepository
+import repositories.vehiculo.VehiculoRepository
 import repositories.vehiculo.VehiculoRepositoryCached
 
 class VehiculoController(
@@ -16,8 +17,8 @@ class VehiculoController(
     ) {
 
 
-    suspend fun findAllVehiculo() : Flow<Vehiculo> {
-        return vehiculoRepository.findAll().flowOn(Dispatchers.IO)
+    suspend fun findAllVehiculo() : Flow<Vehiculo>? {
+        return vehiculoRepository.findAll().getOrNull()?.flowOn(Dispatchers.IO)
     }
 
     suspend fun saveVehiculo(entity : Vehiculo){
@@ -40,7 +41,7 @@ class VehiculoController(
             if (vehiculo == null){
                 throw VehiculoControllerException("EL vehiculo con el id: $id no existe")
             }else{
-                return vehiculo
+                return vehiculo.getOrNull()
             }
         }else{
             return vehiculoCached
@@ -70,8 +71,5 @@ class VehiculoController(
         }
 
     }
-
-
-
 
 }

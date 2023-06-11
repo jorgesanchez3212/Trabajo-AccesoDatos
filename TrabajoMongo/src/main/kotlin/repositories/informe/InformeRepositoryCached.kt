@@ -7,7 +7,7 @@ import services.informes.InformesCache
 
 class InformeRepositoryCached(
     private val informesCache: InformesCache
-) : IInformeRepository {
+) : IInformeRepositoryCached {
     override suspend fun findAll(): Flow<Informe> {
        return informesCache.cache.asMap().values.asFlow()
     }

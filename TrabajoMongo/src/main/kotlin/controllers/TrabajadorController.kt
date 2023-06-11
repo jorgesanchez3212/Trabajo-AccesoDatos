@@ -17,8 +17,8 @@ class TrabajadorController(
 ) {
 
 
-    suspend fun findAllTrabajadores() : Flow<Trabajador>{
-        return trabajadoresRepository.findAll().flowOn(Dispatchers.IO)
+    suspend fun findAllTrabajadores() : Flow<Trabajador>?{
+        return trabajadoresRepository.findAll().getOrNull()?.flowOn(Dispatchers.IO)
     }
     suspend fun saveTrabajador(entity: Trabajador) {
         val trabajador = trabajadoresRepository.findByEmail(entity.email)
@@ -41,10 +41,10 @@ class TrabajadorController(
             salarioTrabajador += 1000
         }
 
-        if (trabajador != null) {
+        if (trabajador.getOrNull() != null) {
             throw TrabajadorControllerException("El email ${entity.email} ya existe")
         } else {
-            if (usernameTrabajador != null) {
+            if (usernameTrabajador.getOrNull() != null) {
                 throw TrabajadorControllerException("El username ${entity.username} ya existe")
             } else {
                 if (entity.salario == salarioTrabajador) {
@@ -72,7 +72,7 @@ class TrabajadorController(
         }
     }
 
-    suspend fun findById(id : String){
+    suspend fun findById(id : String) {
         withContext(Dispatchers.IO){
             launch {
                 trabajadoresRepository.findById(id)

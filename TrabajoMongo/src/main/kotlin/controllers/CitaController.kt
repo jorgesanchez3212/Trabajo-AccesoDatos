@@ -17,8 +17,8 @@ class CitaController(
 ) {
 
 
-    suspend fun findAllCita() : Flow<Cita> {
-        return citaRepository.findAll().flowOn(Dispatchers.IO)
+    suspend fun findAllCita() : Flow<Cita>? {
+        return citaRepository.findAll().getOrNull()?.flowOn(Dispatchers.IO)
     }
 
 
@@ -28,13 +28,14 @@ class CitaController(
 
         // Verificar el límite de 4 citas por intervalo para el trabajador
         val citasIntervaloTrabajador = citaRepository.findByTrabajadorAndIntervalo(trabajador, entity.fechaHora)
-        if (citasIntervaloTrabajador.size >= 4) {
+
+        if (citasIntervaloTrabajador.getOrDefault(listOf()).size >= 4) {
             throw CitaControllerException("El trabajador no tiene hueco disponible en este intervalo de 30 minutos")
         }
 
         // Verificar el límite de 8 citas en el mismo intervalo
         val citasIntervalo = citaRepository.findByIntervalo(entity.fechaHora)
-        if (citasIntervalo.size >= 8) {
+        if (citasIntervalo.getOrDefault(listOf()).size >= 8) {
             throw CitaControllerException("No hay disponibilidad de citas en este intervalo de 30 minutos")
         }
 
@@ -55,10 +56,10 @@ class CitaController(
         val citaCached = cache.findById(id)
         if(citaCached == null){
             val cita = citaRepository.findById(id)
-            if (cita == null){
+            if (cita.getOrNull() == null){
                 throw CitaControllerException("La cita con el id: $id no existe")
             }else{
-                return cita
+                return cita.getOrNull()
             }
         }else{
             return citaCached

@@ -4,8 +4,8 @@ import models.Trabajador
 import repositories.CrudRepository
 
 interface ITrabajadorRepository : CrudRepository<Trabajador, String> {
-    suspend fun findByEmail(email: String): Trabajador?
-    suspend fun findByUsername(username: String): Trabajador?
+    suspend fun findByEmail(email: String): Result<Trabajador?>
+    suspend fun findByUsername(username: String): Result<Trabajador?>
 
 
 }

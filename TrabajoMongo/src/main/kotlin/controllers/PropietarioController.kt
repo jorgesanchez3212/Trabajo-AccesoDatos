@@ -14,8 +14,8 @@ class PropietarioController(
     ) {
 
 
-    suspend fun findAllPropietario() : Flow<Propietario> {
-        return propietarioRepository.findAll().flowOn(Dispatchers.IO)
+    suspend fun findAllPropietario() : Flow<Propietario>? {
+        return propietarioRepository.findAll().getOrNull()?.flowOn(Dispatchers.IO)
     }
 
     suspend fun savePropietario(entity : Propietario){
@@ -29,8 +29,8 @@ class PropietarioController(
 
     suspend fun findByIdPropietario(id : String) : Propietario?{
         val propietario = propietarioRepository.findById(id)
-        if (propietario!= null){
-            return propietario
+        if (propietario.getOrNull() != null){
+            return propietario.getOrNull()
         }else{
             throw PropietarioControllerException("No se ha encontrado el propietario con el id $id")
         }
