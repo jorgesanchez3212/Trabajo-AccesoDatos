@@ -32,7 +32,7 @@ class PropietarioControllerTest {
         MongoDbManager.database.getCollection<Propietario>().drop()
 
         controller.savePropietario(entity)
-        var res = controller.findAllPropietario().toList()
+        var res = controller.findAllPropietario()!!.toList()
         assertAll(
             { assertEquals(1, res.size) }
         )
@@ -44,7 +44,7 @@ class PropietarioControllerTest {
         MongoDbManager.database.getCollection<Propietario>().drop()
 
         controller.savePropietario(entity)
-        var list = controller.findAllPropietario().toList()
+        var list = controller.findAllPropietario()!!.toList()
         assertAll(
             { assertEquals(1, list.size) }
         )
@@ -64,7 +64,7 @@ class PropietarioControllerTest {
         )
         controller.savePropietario(entity)
         controller.updatePropietario(entity1)
-        var list = controller.findAllPropietario().toList()
+        var list = controller.findAllPropietario()!!.toList()
         assertAll(
             { assertEquals(entity1.dni, list[0].dni) }
         )
@@ -77,12 +77,12 @@ class PropietarioControllerTest {
         MongoDbManager.database.getCollection<Propietario>().drop()
 
         controller.savePropietario(entity)
-        var list = controller.findAllPropietario().toList()
+        var list = controller.findAllPropietario()!!.toList()
         assertAll(
             { assertEquals(1, list.size) }
         )
         repository.delete(entity._id)
-        var listBorrar = controller.findAllPropietario().toList()
+        var listBorrar = controller.findAllPropietario()!!.toList()
 
         assertAll(
             { assertNotEquals(listBorrar.size, list.size) }

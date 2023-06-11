@@ -36,7 +36,7 @@ class VehiculoControllerTest {
         MongoDbManager.database.getCollection<Vehiculo>().drop()
 
         controller.saveVehiculo(entity)
-        var res = controller.findAllVehiculo().toList()
+        var res = controller.findAllVehiculo()!!.toList()
         assertAll(
             { assertEquals(1, res.size) }
         )
@@ -48,7 +48,7 @@ class VehiculoControllerTest {
         MongoDbManager.database.getCollection<Vehiculo>().drop()
 
         controller.saveVehiculo(entity)
-        var list = controller.findAllVehiculo().toList()
+        var list = controller.findAllVehiculo()!!.toList()
         assertAll(
             { assertEquals(1, list.size) }
         )
@@ -69,7 +69,7 @@ class VehiculoControllerTest {
         )
         controller.saveVehiculo(entity)
         controller.updateVehiculo(entity1)
-        var list = controller.findAllVehiculo().toList()
+        var list = controller.findAllVehiculo()!!.toList()
         assertAll(
             { assertEquals(entity1.modelo, list[0].modelo) }
         )
@@ -82,12 +82,12 @@ class VehiculoControllerTest {
         MongoDbManager.database.getCollection<Vehiculo>().drop()
 
         controller.saveVehiculo(entity)
-        var list = controller.findAllVehiculo().toList()
+        var list = controller.findAllVehiculo()!!.toList()
         assertAll(
             { assertEquals(1, list.size) }
         )
         controller.borrarVehiculo(entity._id)
-        var listBorrar = controller.findAllVehiculo().toList()
+        var listBorrar = controller.findAllVehiculo()!!.toList()
 
         assertAll(
             { assertNotEquals(listBorrar.size, list.size) }

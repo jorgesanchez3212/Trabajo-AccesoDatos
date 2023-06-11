@@ -15,7 +15,7 @@ import java.time.LocalDate
 class VehiculoRepositoryTest {
     val repository = VehiculoRepository()
 
-    val vehiculo =  Vehiculo(
+    val vehiculo = Vehiculo(
         _id = "21",
         marca = "BMW",
         modelo = "W3",
@@ -27,10 +27,10 @@ class VehiculoRepositoryTest {
 
     //Test del findAll de vehiculo
     @Test
-    fun findAll()  = runBlocking {
+    fun findAll(): Unit = runBlocking {
         MongoDbManager.database.getCollection<Vehiculo>().drop()
         repository.save(vehiculo)
-        val list = repository.findAll().toList()
+        val list = repository.findAll().getOrNull()!!.toList()
         Assertions.assertAll(
             { Assertions.assertNotNull(list) },
             { Assertions.assertEquals(1, list.size) }
@@ -40,7 +40,7 @@ class VehiculoRepositoryTest {
 
     // Test del findById de vehiculo
     @Test
-    fun findById() = runBlocking {
+    fun findById(): Unit = runBlocking {
         repository.save(vehiculo)
         val vehiculos = repository.findById("21")
         Assertions.assertAll(
@@ -52,7 +52,7 @@ class VehiculoRepositoryTest {
 
     // Test del save de vehiculo
     @Test
-    fun save() = runBlocking {
+    fun save(): Unit = runBlocking {
         repository.save(vehiculo)
         val vehiculos = repository.findById("21")
         Assertions.assertAll(
@@ -64,15 +64,15 @@ class VehiculoRepositoryTest {
 
     // Test del update de vehiculo
     @Test
-    fun update() = runBlocking {
+    fun update(): Unit = runBlocking {
         repository.save(vehiculo)
         repository.update(vehiculo)
-        val vehiculos = repository.findById("21")
+        val vehiculos = repository.findById("21").getOrNull()
         Assertions.assertAll(
-            { Assertions.assertNotNull(vehiculo) },
-            { Assertions.assertEquals("21", vehiculo._id) }
+            { Assertions.assertNotNull(vehiculos) },
+            { Assertions.assertEquals("21", vehiculos?._id) }
         )
-        repository.delete(vehiculo._id)
+        repository.delete(vehiculos!!._id)
 
     }
 
@@ -81,10 +81,10 @@ class VehiculoRepositoryTest {
     fun delete() = runBlocking {
         repository.save(vehiculo)
         val vehiculoss = repository.findById("21")
-        if(vehiculoss != null){
+        if (vehiculoss.getOrNull() != null) {
             repository.delete(vehiculo._id)
         }
-        val vehiculosss = repository.findById("21")
+        val vehiculosss = repository.findById("21").getOrNull()
 
         Assertions.assertAll(
             { Assertions.assertNotNull(vehiculoss) },

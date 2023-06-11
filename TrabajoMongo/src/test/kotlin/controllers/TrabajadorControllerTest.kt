@@ -37,7 +37,7 @@ class TrabajadorControllerTest {
         MongoDbManager.database.getCollection<Trabajador>().drop()
 
         controller.saveTrabajador(trabajador)
-        var res = controller.findAllTrabajadores().toList()
+        var res = controller.findAllTrabajadores()!!.toList()
         assertAll(
             { assertEquals(1, res.size) }
         )
@@ -49,7 +49,7 @@ class TrabajadorControllerTest {
         MongoDbManager.database.getCollection<Trabajador>().drop()
 
         controller.saveTrabajador(trabajador)
-        var list = controller.findAllTrabajadores().toList()
+        var list = controller.findAllTrabajadores()!!.toList()
         assertAll(
             { assertEquals(1, list.size) }
         )
@@ -74,7 +74,7 @@ class TrabajadorControllerTest {
         )
         controller.saveTrabajador(trabajador)
         controller.updateTrabajador(trabajador1)
-        var list = controller.findAllTrabajadores().toList()
+        var list = controller.findAllTrabajadores()!!.toList()
         assertAll(
             { assertEquals(trabajador1.email, list[0].email) }
         )
@@ -87,12 +87,12 @@ class TrabajadorControllerTest {
         MongoDbManager.database.getCollection<Trabajador>().drop()
 
         controller.saveTrabajador(trabajador)
-        var list = controller.findAllTrabajadores().toList()
+        var list = controller.findAllTrabajadores()!!.toList()
         assertAll(
             { assertEquals(1, list.size) }
         )
         repository.delete(trabajador._id)
-        var listBorrar = controller.findAllTrabajadores().toList()
+        var listBorrar = controller.findAllTrabajadores()!!.toList()
 
         assertAll(
             { assertNotEquals(listBorrar.size, list.size) }

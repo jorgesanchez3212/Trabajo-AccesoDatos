@@ -29,10 +29,10 @@ class TrabajadorRepositoryTest {
 
     //Test del findAll de trabajadores
     @Test
-    fun findAll()  = runBlocking {
+    fun findAll(): Unit = runBlocking {
         MongoDbManager.database.getCollection<Trabajador>().drop()
         repository.save(trabajador)
-        val list = repository.findAll().toList()
+        val list = repository.findAll().getOrNull()!!.toList()
         assertAll(
             { assertNotNull(list) },
             { assertEquals(1, list.size) }
@@ -42,7 +42,7 @@ class TrabajadorRepositoryTest {
 
     // Test del findById de trabajador
     @Test
-    fun findById() = runBlocking {
+    fun findById(): Unit = runBlocking {
         repository.save(trabajador)
         val trabajadores = repository.findById("21")
         assertAll(
@@ -54,7 +54,7 @@ class TrabajadorRepositoryTest {
 
     // Test del save de trabajador
     @Test
-    fun save() = runBlocking {
+    fun save(): Unit = runBlocking {
         repository.save(trabajador)
         val trabajadores = repository.findById("21")
         assertAll(
@@ -66,7 +66,7 @@ class TrabajadorRepositoryTest {
 
     // Test del update de trabajador
     @Test
-    fun update() = runBlocking {
+    fun update(): Unit = runBlocking {
         repository.save(trabajador)
         repository.update(trabajador)
         val trabajadores = repository.findById("21")
@@ -82,11 +82,11 @@ class TrabajadorRepositoryTest {
     @Test
     fun delete() = runBlocking {
         repository.save(trabajador)
-        val trabajadorr = repository.findById("21")
+        val trabajadorr = repository.findById("21").getOrNull()
         if(trabajadorr != null){
             repository.delete(trabajador._id)
         }
-        val trabajadorrr = repository.findById("21")
+        val trabajadorrr = repository.findById("21").getOrNull()
 
         assertAll(
             { assertNotNull(trabajadorr) },

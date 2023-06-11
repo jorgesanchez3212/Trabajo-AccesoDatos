@@ -25,10 +25,10 @@ class CitasRepositoryTest {
 
     //Test del findAll de cita
     @Test
-    fun findAll()  = runBlocking {
+    fun findAll(): Unit = runBlocking {
         MongoDbManager.database.getCollection<Cita>().drop()
         repository.save(cita)
-        val list = repository.findAll().toList()
+        val list = repository.findAll().getOrNull()!!.toList()
         Assertions.assertAll(
             { Assertions.assertNotNull(list) },
             { Assertions.assertEquals(1, list.size) }
@@ -38,7 +38,7 @@ class CitasRepositoryTest {
 
     // Test del findById de cita
     @Test
-    fun findById() = runBlocking {
+    fun findById(): Unit = runBlocking {
         repository.save(cita)
         val citaas = repository.findById("21")
         Assertions.assertAll(
@@ -50,7 +50,7 @@ class CitasRepositoryTest {
 
     // Test del save de cita
     @Test
-    fun save() = runBlocking {
+    fun save(): Unit = runBlocking {
         repository.save(cita)
         val citas = repository.findById("21")
         Assertions.assertAll(
@@ -62,7 +62,7 @@ class CitasRepositoryTest {
 
     // Test del update de cita
     @Test
-    fun update() = runBlocking {
+    fun update(): Unit = runBlocking {
         repository.save(cita)
         repository.update(cita)
         val citas = repository.findById("21")
@@ -78,11 +78,11 @@ class CitasRepositoryTest {
     @Test
     fun delete() = runBlocking {
         repository.save(cita)
-        val citas = repository.findById("21")
+        val citas = repository.findById("21").getOrNull()
         if(citas != null){
             repository.delete(cita._id)
         }
-        val citass = repository.findById("21")
+        val citass = repository.findById("21").getOrNull()
 
         Assertions.assertAll(
             { Assertions.assertNotNull(citas) },

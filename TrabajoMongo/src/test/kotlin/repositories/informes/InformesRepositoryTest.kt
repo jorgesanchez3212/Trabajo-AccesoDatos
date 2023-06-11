@@ -30,10 +30,10 @@ class InformesRepositoryTest {
 
     //Test del findAll de informe
     @Test
-    fun findAll()  = runBlocking {
+    fun findAll(): Unit = runBlocking {
         MongoDbManager.database.getCollection<Informe>().drop()
         repository.save(informe)
-        val list = repository.findAll().toList()
+        val list = repository.findAll().getOrNull()!!.toList()
         Assertions.assertAll(
             { Assertions.assertNotNull(list) },
             { Assertions.assertEquals(1, list.size) }
@@ -43,7 +43,7 @@ class InformesRepositoryTest {
 
     // Test del findById de informe
     @Test
-    fun findById() = runBlocking {
+    fun findById(): Unit = runBlocking {
         repository.save(informe)
         val informes = repository.findById("21")
         Assertions.assertAll(
@@ -55,7 +55,7 @@ class InformesRepositoryTest {
 
     // Test del save de informe
     @Test
-    fun save() = runBlocking {
+    fun save(): Unit = runBlocking {
         repository.save(informe)
         val informes = repository.findById("21")
         Assertions.assertAll(
@@ -67,7 +67,7 @@ class InformesRepositoryTest {
 
     // Test del update de informe
     @Test
-    fun update() = runBlocking {
+    fun update(): Unit = runBlocking {
         repository.save(informe)
         repository.update(informe)
         val informes = repository.findById("21")
@@ -83,11 +83,11 @@ class InformesRepositoryTest {
     @Test
     fun delete() = runBlocking {
         repository.save(informe)
-        val informes = repository.findById("21")
+        val informes = repository.findById("21").getOrNull()
         if(informes != null){
             repository.delete(informe._id)
         }
-        val informess = repository.findById("21")
+        val informess = repository.findById("21").getOrNull()
 
         Assertions.assertAll(
             { Assertions.assertNotNull(informes) },

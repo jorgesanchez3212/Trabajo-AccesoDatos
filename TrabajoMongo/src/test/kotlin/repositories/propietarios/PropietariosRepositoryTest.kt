@@ -27,10 +27,10 @@ class PropietariosRepositoryTest {
 
     //Test del findAll de propietario
     @Test
-    fun findAll()  = runBlocking {
+    fun findAll(): Unit = runBlocking {
         MongoDbManager.database.getCollection<Propietario>().drop()
         repository.save(propietario)
-        val list = repository.findAll().toList()
+        val list = repository.findAll().getOrNull()!!.toList()
         Assertions.assertAll(
             { Assertions.assertNotNull(list) },
             { Assertions.assertEquals(1, list.size) }
@@ -40,7 +40,7 @@ class PropietariosRepositoryTest {
 
     // Test del findById de propietario
     @Test
-    fun findById() = runBlocking {
+    fun findById(): Unit = runBlocking {
         repository.save(propietario)
         val propietarios = repository.findById("21")
         Assertions.assertAll(
@@ -52,7 +52,7 @@ class PropietariosRepositoryTest {
 
     // Test del save de propietario
     @Test
-    fun save() = runBlocking {
+    fun save(): Unit = runBlocking {
         repository.save(propietario)
         val propietarios = repository.findById("21")
         Assertions.assertAll(
@@ -64,7 +64,7 @@ class PropietariosRepositoryTest {
 
     // Test del update de propietario
     @Test
-    fun update() = runBlocking {
+    fun update(): Unit = runBlocking {
         repository.save(propietario)
         repository.update(propietario)
         val propietarios = repository.findById("21")
@@ -80,11 +80,11 @@ class PropietariosRepositoryTest {
     @Test
     fun delete() = runBlocking {
         repository.save(propietario)
-        val propietarioo = repository.findById("21")
+        val propietarioo = repository.findById("21").getOrNull()
         if(propietarioo != null){
             repository.delete(propietario._id)
         }
-        val propietariooo = repository.findById("21")
+        val propietariooo = repository.findById("21").getOrNull()
 
         Assertions.assertAll(
             { Assertions.assertNotNull(propietarioo) },
