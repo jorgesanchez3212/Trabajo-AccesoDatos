@@ -4,6 +4,7 @@ import db.HibernateManager
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import models.Cita
+import models.Trabajador
 import mu.KotlinLogging
 import java.time.LocalDateTime
 import java.util.*
@@ -74,7 +75,7 @@ class CitaRepository : ICitaRepository {
         }
     }
 
-    override suspend fun findByTrabajadorAndIntervalo(trabajador: UUID, fechaHora: LocalDateTime): List<Cita> {
+    override suspend fun findByTrabajadorAndIntervalo(trabajador: Trabajador, fechaHora: LocalDateTime): List<Cita> {
         logger.info { "Buscando citas por trabajador y intervalo" }
 
         val query: TypedQuery<Cita> = HibernateManager.manager.createQuery(

@@ -1,6 +1,7 @@
 package db
 
 import mu.KotlinLogging
+import org.hibernate.Session
 import java.io.Closeable
 import java.sql.SQLException
 import javax.persistence.EntityManager
@@ -18,6 +19,8 @@ object HibernateManager : Closeable {
     private var entityManagerFactory = Persistence.createEntityManagerFactory("default")
     lateinit var manager: EntityManager
     private lateinit var transaction: EntityTransaction
+    private var session: Session? = null
+
 
     init {
         // Creamos la EntityManagerFactory
@@ -31,10 +34,12 @@ object HibernateManager : Closeable {
         logger.debug { "Iniciando EntityManagerFactory" }
         manager = entityManagerFactory.createEntityManager()
         transaction = manager.transaction
+        session = manager.unwrap(Session::class.java)
     }
 
     override fun close() {
         logger.debug { "Cerrando EntityManager" }
+        session?.close()
         manager.close()
     }
 

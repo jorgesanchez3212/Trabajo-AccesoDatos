@@ -1,5 +1,6 @@
 package controllers
 
+import db.HibernateManager
 import exception.CitaControllerException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -24,10 +25,11 @@ class CitaController(
 
 
     suspend fun saveCita(entity: Cita) {
+        HibernateManager.open()
         withContext(Dispatchers.IO) {
             val trabajador = entity.idTrabajador
 
-            val citasIntervaloTrabajador = citaRepository.findByTrabajadorAndIntervalo(trabajador.uuid, entity.fechaHora)
+            val citasIntervaloTrabajador = citaRepository.findByTrabajadorAndIntervalo(trabajador, entity.fechaHora)
             if (citasIntervaloTrabajador.size >= 4) {
                 throw CitaControllerException("El trabajador no tiene hueco disponible en este intervalo de 30 minutos")
             }
@@ -44,6 +46,7 @@ class CitaController(
                 cache.save(entity)
             }
         }
+        HibernateManager.close()
     }
 
 
@@ -81,7 +84,8 @@ class CitaController(
     suspend fun updateCita(entity: Cita){
         withContext(Dispatchers.IO){
             launch {
-                citaRepository.update(entity)            }
+                citaRepository.update(entity)
+            }
             launch {
                 cache.update(entity)
             }
