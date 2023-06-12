@@ -1,12 +1,13 @@
 package repositories.trabajador
 
 import db.MongoDbManager
-import exception.CitaException
 import exception.TrabajadorException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.reactive.asFlow
 import models.Trabajador
 import org.litote.kmongo.eq
+
+
 class TrabajadorRepository : ITrabajadorRepository {
     override suspend fun findAll(): Result<Flow<Trabajador>> {
         return try {

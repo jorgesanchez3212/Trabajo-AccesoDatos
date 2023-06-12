@@ -27,7 +27,7 @@ class ItvView(
         lista.forEach {
             trabajadorController.saveTrabajador(it)
         }
-        val trabajadores = trabajadorController.findAllTrabajadores().toList()
+        val trabajadores = trabajadorController.findAllTrabajadores()!!.toList()
         val list = mutableListOf<String>()
 
         //Trabajador que mas gana sin ser responsable

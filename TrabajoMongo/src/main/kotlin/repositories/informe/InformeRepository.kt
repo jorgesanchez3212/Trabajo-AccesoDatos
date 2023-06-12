@@ -1,11 +1,12 @@
 package repositories.informe
 
 import db.MongoDbManager
-import exception.CitaException
 import exception.InformeException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.reactive.asFlow
 import models.Informe
+
+
 class InformeRepository : IInformeRepository {
     override suspend fun findAll(): Result<Flow<Informe>> {
         return try {

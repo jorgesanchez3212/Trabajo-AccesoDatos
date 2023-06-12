@@ -139,7 +139,6 @@ class CitaRepository : ICitaRepository {
             Result.failure(CitaException("No se ha podido encontrar citas para el intervalo de tiempo especificado"))
         }
     }
-
     suspend fun deleteAll(): Result<Unit> {
         logger.info { "Eliminando todas las citas" }
         return try {

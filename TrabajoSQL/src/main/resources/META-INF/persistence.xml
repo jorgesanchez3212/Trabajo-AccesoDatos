@@ -14,11 +14,6 @@
         <class>models.Propietario</class>
         <class>models.Cita</class>
         <class>models.Informe</class>
-
-
-
-
-
         <properties>
             <property name="hibernate.connection.driver_class" value="org.h2.Driver"/>
             <property name="hibernate.connection.username" value=""/>

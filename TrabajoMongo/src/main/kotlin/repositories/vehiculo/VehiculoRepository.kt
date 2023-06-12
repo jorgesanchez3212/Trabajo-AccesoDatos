@@ -1,7 +1,6 @@
 package repositories.vehiculo
 
 import db.MongoDbManager
-import exception.CitaException
 import exception.VehiculoException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.reactive.asFlow

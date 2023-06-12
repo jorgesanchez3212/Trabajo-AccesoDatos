@@ -4,6 +4,7 @@ import org.litote.kmongo.coroutine.CoroutineClient
 import org.litote.kmongo.coroutine.CoroutineDatabase
 import org.litote.kmongo.coroutine.coroutine
 import java.util.*
+
 object MongoDbManager {
 
     private lateinit var mongoClient: CoroutineClient
