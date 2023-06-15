@@ -1,4 +1,7 @@
 import controllers.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import repositories.cita.CitaRepository
 import repositories.cita.CitaRepositoryCached
@@ -15,15 +18,26 @@ import view.ItvView
 
 
 fun main() = runBlocking {
-    val itv = ItvView(CitaController(CitaRepository(), CitaRepositoryCached(CitaCache())),
+    val cita = CitaController(CitaRepository(), CitaRepositoryCached(CitaCache()))
+
+    val itv = ItvView(cita,
         InformeController(InformeRepository(), InformeRepositoryCached(InformeCache())),
         PropietarioController(PropietarioRepository()),
         TrabajadorController(TrabajadorRepository()),
         VehiculoController(VehiculoRepository(), VehiculoRepositoryCached(VehiculosCache()))
     )
 
+    CoroutineScope(Dispatchers.IO).launch {
+        cita.state.collect{
+            println("SE HA PRODUCIDO CAMBIO EN CITAS -> $it")
+        }
+    }
+
     itv.añadirDatos()
     itv.informes()
+
+
+    System.exit(0)
 
 }
 

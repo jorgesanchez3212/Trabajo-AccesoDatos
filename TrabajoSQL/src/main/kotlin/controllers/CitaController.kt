@@ -3,9 +3,8 @@ package controllers
 import db.HibernateManager
 import exception.CitaControllerException
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import models.Cita
@@ -18,6 +17,8 @@ class CitaController(
     private val cache : CitaRepositoryCached
 ) {
 
+    private val _state = MutableSharedFlow<Cita>(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
+    val state = _state.asSharedFlow()
 
     suspend fun findAllCita() : Flow<Cita>? {
         return citaRepository.findAll().getOrNull()?.flowOn(Dispatchers.IO)
@@ -41,6 +42,7 @@ class CitaController(
 
             launch {
                 citaRepository.save(entity)
+                _state.emit(entity)
             }
             launch {
                 cache.save(entity)
@@ -85,6 +87,8 @@ class CitaController(
         withContext(Dispatchers.IO){
             launch {
                 citaRepository.update(entity)
+                _state.emit(entity)
+
             }
             launch {
                 cache.update(entity)

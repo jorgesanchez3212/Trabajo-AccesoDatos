@@ -30,8 +30,7 @@ object MongoDbManager {
     init {
         println("MongoDB -> $MONGO_URI$OPTIONS")
         mongoClient =
-            KMongo.createClient("$MONGO_URI$OPTIONS")
-                .coroutine
+            KMongo.createClient("$MONGO_URI$OPTIONS").coroutine
         database = mongoClient.getDatabase("itv")
     }
 }
