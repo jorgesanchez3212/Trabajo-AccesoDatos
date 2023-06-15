@@ -13,6 +13,7 @@ import services.informes.InformeCache
 import services.vehiculos.VehiculosCache
 import view.ItvView
 
+
 fun main() = runBlocking {
     val itv = ItvView(CitaController(CitaRepository(), CitaRepositoryCached(CitaCache())),
         InformeController(InformeRepository(), InformeRepositoryCached(InformeCache())),
@@ -23,4 +24,6 @@ fun main() = runBlocking {
 
     itv.añadirDatos()
     itv.informes()
+
 }
+
