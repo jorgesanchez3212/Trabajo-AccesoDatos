@@ -2,6 +2,9 @@ package com.example.itvspringapplication
 
 import com.example.itvspringapplication.services.reactive.Watchers
 import com.example.itvspringapplication.view.ItvView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.CommandLineRunner
@@ -15,9 +18,13 @@ class ItvSpringApplication
     private val vista : ItvView,
 ) : CommandLineRunner{
     override fun run(vararg args: String?) = runBlocking {
+        println("💻Bienvenido a la ITV...😎")
+
+        CoroutineScope(Dispatchers.IO).launch {
+            vista.state()
+        }
         vista.borrarTodo()
-        vista.añadirDatos()
-        vista.informes("data" + File.separator+"trabajadores.csv")
+        vista.menu()
     }
 
 }

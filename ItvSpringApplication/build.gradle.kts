@@ -31,6 +31,9 @@ dependencies {
     // Corrutinas
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
 
+    // XML
+    implementation("io.github.pdvrieze.xmlutil:serialization-jvm:0.84.3")
+
     // Logger
     implementation("io.github.microutils:kotlin-logging-jvm:3.0.4")
     implementation("ch.qos.logback:logback-classic:1.4.4")

@@ -1,0 +1,51 @@
+[
+    {
+        "_id": "1",
+        "dni": "12345678A",
+        "nombre": "Juan",
+        "apellidos": "Pérez López",
+        "teléfono": "123456789"
+    },
+    {
+        "_id": "2",
+        "dni": "87654321B",
+        "nombre": "María",
+        "apellidos": "García Fernández",
+        "teléfono": "987654321"
+    },
+    {
+        "_id": "3",
+        "dni": "56789012C",
+        "nombre": "Pedro",
+        "apellidos": "Martínez Sánchez",
+        "teléfono": "555555555"
+    },
+    {
+        "_id": "4",
+        "dni": "90123456D",
+        "nombre": "Laura",
+        "apellidos": "Torres Rodríguez",
+        "teléfono": "111111111"
+    },
+    {
+        "_id": "5",
+        "dni": "34567890E",
+        "nombre": "Ana",
+        "apellidos": "López Navarro",
+        "teléfono": "999999999"
+    },
+    {
+        "_id": "6",
+        "dni": "67890123F",
+        "nombre": "Carlos",
+        "apellidos": "Gómez Ruiz",
+        "teléfono": "777777777"
+    },
+    {
+        "_id": "7",
+        "dni": "23456789G",
+        "nombre": "Sara",
+        "apellidos": "Hernández García",
+        "teléfono": "444444444"
+    }
+]
