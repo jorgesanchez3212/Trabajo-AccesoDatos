@@ -1,7 +1,9 @@
 package com.example.springjpa.models
 
 
+import com.example.springjpa.serializers.UUIDSerializer
 import jakarta.persistence.*
+import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import java.util.*
 
@@ -9,7 +11,7 @@ import java.util.*
 @Table(name = "Informe")
 @Serializable
 data class Informe(
-    @Id
+    @Id @Serializable(with = UUIDSerializer::class)
     var uuid: UUID ,
     var frenado : Int,
     var contaminación : Double,

@@ -6,6 +6,8 @@ plugins {
     kotlin("jvm") version "1.8.21"
     kotlin("plugin.spring") version "1.8.21"
     kotlin("plugin.jpa") version "1.8.21"
+    kotlin("plugin.serialization") version "1.7.10"
+
 }
 
 group = "com.example"
@@ -26,9 +28,8 @@ dependencies {
 
     implementation("com.h2database:h2:2.1.214")
 
-
-
-
+    // XML
+    implementation("io.github.pdvrieze.xmlutil:serialization-jvm:0.84.3")
     // Corrutinas
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
 

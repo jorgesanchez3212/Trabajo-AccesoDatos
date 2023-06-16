@@ -1,0 +1,58 @@
+[
+    {
+        "uuid": "8f121bdd-238a-4c59-a7e3-0c1f382aefb2",
+        "marca": "Toyota",
+        "modelo": "Corolla",
+        "matricula": "ABC123",
+        "fechaMatriculacion": "2022-01-15",
+        "fechaUltimaRevision": "2022-12-30"
+    },
+    {
+        "uuid": "8f121bdd-238a-4c59-a7e3-0c1f382aefb2",
+        "marca": "Honda",
+        "modelo": "Civic",
+        "matricula": "DEF456",
+        "fechaMatriculacion": "2021-08-27",
+        "fechaUltimaRevision": "2023-01-05"
+    },
+    {
+        "uuid": "8f121bdd-238a-4c59-a7e3-0c1f382aefb2",
+        "marca": "Ford",
+        "modelo": "Focus",
+        "matricula": "GHI789",
+        "fechaMatriculacion": "2020-11-10",
+        "fechaUltimaRevision": "2022-09-20"
+    },
+    {
+        "uuid": "8f121bdd-238a-4c59-a7e3-0c1f382aefb2",
+        "marca": "Volkswagen",
+        "modelo": "Golf",
+        "matricula": "JKL012",
+        "fechaMatriculacion": "2023-03-05",
+        "fechaUltimaRevision": "2023-05-15"
+    },
+    {
+        "uuid": "8f121bdd-238a-4c59-a7e3-0c1f382aefb2",
+        "marca": "Chevrolet",
+        "modelo": "Cruze",
+        "matricula": "MNO345",
+        "fechaMatriculacion": "2019-07-18",
+        "fechaUltimaRevision": "2021-12-10"
+    },
+    {
+        "uuid": "8f121bdd-238a-4c59-a7e3-0c1f382aefb2",
+        "marca": "BMW",
+        "modelo": "X5",
+        "matricula": "PQR678",
+        "fechaMatriculacion": "2022-09-02",
+        "fechaUltimaRevision": "2023-04-28"
+    },
+    {
+        "uuid": "8f121bdd-238a-4c59-a7e3-0c1f382aefb2",
+        "marca": "Mercedes-Benz",
+        "modelo": "E-Class",
+        "matricula": "STU901",
+        "fechaMatriculacion": "2021-03-12",
+        "fechaUltimaRevision": "2022-07-20"
+    }
+]

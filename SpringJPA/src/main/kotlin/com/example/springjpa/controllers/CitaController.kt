@@ -5,9 +5,8 @@ import com.example.springjpa.models.Cita
 import com.example.springjpa.repositories.cita.CitaRepository
 import com.example.springjpa.repositories.cita.CitaRepositoryCached
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.springframework.beans.factory.annotation.Autowired
@@ -21,6 +20,8 @@ class CitaController
     private val cache : CitaRepositoryCached
 ) {
 
+    private val _state = MutableSharedFlow<String>(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
+    val state = _state.asSharedFlow()
 
     suspend fun findAllCita() : Flow<Cita> {
         return citaRepository.findAll().asFlow().flowOn(Dispatchers.IO)
@@ -52,6 +53,7 @@ class CitaController
         withContext(Dispatchers.IO) {
             launch {
                 cache.save(entity)
+                _state.emit("Se ha añadido la cita $entity")
             }
         }
 
@@ -86,6 +88,8 @@ class CitaController
             }
         }
         citaRepository.delete(entity)
+        _state.emit("Se ha borrado la cita $entity")
+
 
     }
 
@@ -98,6 +102,8 @@ class CitaController
         }
 
         citaRepository.save(entity)
+        _state.emit("Se ha actualizado la cita $entity")
+
     }
 
     suspend fun deleteAll(){

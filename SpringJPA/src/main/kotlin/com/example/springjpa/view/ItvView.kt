@@ -2,11 +2,13 @@ package com.example.springjpa.view
 
 import com.example.springjpa.controllers.*
 import com.example.springjpa.data.Data
+import com.example.springjpa.dto.InformeDTO
 import com.example.springjpa.models.*
 import kotlinx.coroutines.flow.toList
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import mu.KotlinLogging
+import nl.adaptivity.xmlutil.serialization.XML
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import java.io.File
@@ -27,63 +29,148 @@ class ItvView
 ) {
     private var logger = KotlinLogging.logger {}
 
-
-    suspend fun informes(ruta: String) {
-       for (i in Data.trabajadores){
-           trabajadorController.saveTrabajador(i)
-       }
-        val trabajadores = trabajadorController.findAllTrabajadores().toList()
-        val list = mutableListOf<String>()
+    suspend fun informes(ruta: String){
+        val lista = leerCSV(ruta)
+        lista.forEach {
+            trabajadorController.saveTrabajador(it)
+        }
+        val trabajadores = trabajadorController.findAllTrabajadores()!!.toList()
 
         //Trabajador que mas gana sin ser responsable
-        val trabajador = trabajadores.filter { it.responsable == false }.maxBy { it.salario }
+        val trabajador = trabajadores.filter { it.responsable == false }.maxByOrNull { it.salario }
         println("El trabajador que mas gana sin ser responsable es ${trabajador.toString()}")
-        list.add("El trabajador que mas gana sin ser responsable es ${trabajador.toString()}")
 
         //Salario medio de todos los trabajadores que no son responsables
         val salarioMedio = trabajadores.filter { it.responsable == false }.map { it.salario }.average()
         println("Salario medio de todos los trabajadores que no son responsables es $salarioMedio")
-        list.add("Salario medio de todos los trabajadores que no son responsables es $salarioMedio")
 
         //El salario medio de todos los trabajadores agrupados por especialidad.
-        val salarioMedioAgrupadosPorEspecialidad =
-            trabajadores.groupBy { it.especialidad }.mapValues { entry -> entry.value.map { it.salario }.average() }
+        val salarioMedioAgrupadosPorEspecialidad : Map<String, Double> = trabajadores.groupBy { it.especialidad }.mapValues {
+                entry -> entry.value.map { it.salario }.average() }
         println("Salario medio agrupados por especialidad es $salarioMedioAgrupadosPorEspecialidad")
-        list.add("Salario medio agrupados por especialidad es $salarioMedioAgrupadosPorEspecialidad")
 
         //- La el trabajador/a con menos antigüedad
-        val trabajadorMenosAntiguedad = trabajadores.minBy { it.fechaContratacion }
+        val trabajadorMenosAntiguedad = trabajadores.minByOrNull { it.fechaContratacion }
         println("La el trabajador/a con menos antigüedad $trabajadorMenosAntiguedad")
-        list.add("La el trabajador/a con menos antigüedad $trabajadorMenosAntiguedad")
 
         // Trabajadores ordenados por especialidad y ordenados por antiguedad
-        val trabajadoresOrdenados =
-            trabajadores.sortedWith(compareBy(Trabajador::especialidad, Trabajador::fechaContratacion))
+        val trabajadoresOrdenados = trabajadores.sortedWith(compareBy(Trabajador::especialidad,Trabajador::fechaContratacion))
         println("Trabajadores ordenados por especialidad y ordenados por antiguedad son $trabajadoresOrdenados")
-        list.add("Trabajadores ordenados por especialidad y ordenados por antiguedad son $trabajadoresOrdenados")
 
-        exportarJSON("./metadata", list)
+        val informe = InformeDTO(
+            trabajador.toString(),
+            salarioMedio,
+            salarioMedioAgrupadosPorEspecialidad.toString(),
+            trabajadorMenosAntiguedad.toString(),
+            trabajadoresOrdenados.toString()
+        )
+        exportarJSONTrabajadores("."+File.separator +"metadata", Data.trabajadores)
+        exportarJSONPropietarios("."+File.separator +"metadata", Data.propietarios)
+        exportarJSONVehiculos("."+File.separator +"metadata", Data.vehiculos)
 
-        trabajadores.forEach {
+
+        exportarXML("."+File.separator +"metadata",informe)
+
+        lista.forEach {
             trabajadorController.borrarTrabajador(it)
         }
 
     }
 
 
-    fun exportarJSON(ruta: String, consultas: List<String>) {
+    fun exportarXML(ruta: String, informe : InformeDTO){
+        if (Files.exists(Path(ruta))) {
+            val fichero = File(ruta + File.separator + "informe.xml")
+            val xml = XML {indentString = " "}
+            val x = xml.encodeToString(InformeDTO.serializer(),informe)
+            fichero.writeText(x)
+
+        }else {
+            Files.createDirectories(Path(ruta))
+
+        }
+    }
+
+    fun exportarJSONTrabajadores(ruta: String, trabajadores: List<Trabajador>) {
         logger.debug { "Exportando archivo json" }
         if (Files.exists(Path(ruta))) {
             val json = Json { prettyPrint = true }
-            val fichero = File(ruta + File.separator + "consultas.json")
-            fichero.writeText(json.encodeToString(consultas))
+            val fichero = File(ruta + File.separator + "trabajadores.json")
+            fichero.writeText(json.encodeToString(trabajadores))
         }else {
             Files.createDirectories(Path(ruta))
             val json = Json { prettyPrint = true }
-            val fichero = File(ruta + File.separator + "consultas.json")
-            fichero.writeText(json.encodeToString(consultas))
+            val fichero = File(ruta + File.separator + "trabajadores.json")
+            fichero.writeText(json.encodeToString(trabajadores))
         }
 
+    }
+
+    fun exportarJSONPropietarios(ruta: String, propietario: List<Propietario>) {
+        logger.debug { "Exportando archivo json" }
+        if (Files.exists(Path(ruta))) {
+            val json = Json { prettyPrint = true }
+            val fichero = File(ruta + File.separator + "propietarios.json")
+            fichero.writeText(json.encodeToString(propietario))
+        }else {
+            Files.createDirectories(Path(ruta))
+            val json = Json { prettyPrint = true }
+            val fichero = File(ruta + File.separator + "propietarios.json")
+            fichero.writeText(json.encodeToString(propietario))
+        }
+
+    }
+
+    fun exportarJSONVehiculos(ruta: String, vehiculo: List<Vehiculo>) {
+        logger.debug { "Exportando archivo json" }
+        if (Files.exists(Path(ruta))) {
+            val json = Json { prettyPrint = true }
+            val fichero = File(ruta + File.separator + "vehiculos.json")
+            fichero.writeText(json.encodeToString(vehiculo))
+        }else {
+            Files.createDirectories(Path(ruta))
+            val json = Json { prettyPrint = true }
+            val fichero = File(ruta + File.separator + "vehiculos.json")
+            fichero.writeText(json.encodeToString(vehiculo))
+        }
+
+    }
+
+
+
+
+
+    fun leerCSV(ruta: String) : List<Trabajador>{
+        logger.debug{"Leyendo archivo csv"}
+        val fichero = File(ruta)
+        if(fichero.exists()&&ruta.endsWith(".csv")) {
+            if(fichero.readLines().take(1).first().split(";").size == 10) {
+                return fichero.readLines()
+                    .drop(1)
+                    .map { trabajadores -> trabajadores.split(";") }
+                    .map {
+                        it.map { it.trim() }
+                        Trabajador(
+                            uuid = UUID.fromString(it[0]),
+                            nombre = it[1],
+                            telefono = it[2].toInt(),
+                            email = it[3],
+                            username = it[4],
+                            contraseña = it[5].toByteArray(),
+                            fechaContratacion = LocalDate.parse(it[6]),
+                            especialidad = it[7],
+                            salario = it[8].toInt(),
+                            responsable = it[9].toBoolean()
+                        )
+                    }
+            }else{
+                val f = fichero.readLines().first()
+                println(f)
+                throw Exception("La cabecera no es igual")
+            }
+        }else {
+            throw Exception("El formato no es correcto")
+        }
     }
 
     suspend fun  añadirDatos(){
@@ -197,4 +284,29 @@ class ItvView
         println("Citas borrados")
     }
 
+
+    suspend fun state(){
+        citaController.state.collect{
+            println("SE HA PRODUCIDO CAMBIO EN CITAS 💻 -> $it")
+        }
+    }
+
+    suspend fun menu(){
+        while (true) {
+            println("""
+            Elige una opcion:💻🫡
+                1 -> Añadir Datos
+                2 -> Exportar Informe XML y Entidades en JSON
+                3 -> Salir
+        """.trimIndent())
+            val respuesta = readln()
+            when (respuesta){
+                "1" -> añadirDatos()
+                "2" -> informes("data" + File.separator+"trabajadores.csv")
+                "3" -> System.exit(0)
+            }
+        }
+
+
+    }
 }

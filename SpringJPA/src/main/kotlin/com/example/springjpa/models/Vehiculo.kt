@@ -1,9 +1,11 @@
 package com.example.springjpa.models
 
 import com.example.springjpa.serializers.LocalDateSerializer
+import com.example.springjpa.serializers.UUIDSerializer
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
 import jakarta.persistence.Table
+import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import java.time.LocalDate
 import java.util.*
@@ -13,7 +15,7 @@ import java.util.*
 @Table(name = "vehiculo")
 @Serializable
 data class Vehiculo(
-    @Id
+    @Id @Serializable(with = UUIDSerializer::class)
     var uuid: UUID,
     var marca: String,
     var modelo : String,
