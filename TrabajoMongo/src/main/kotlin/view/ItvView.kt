@@ -269,7 +269,7 @@ class ItvView(
             println("""
             Elige una opcion:💻🫡
                 1 -> Añadir Datos
-                2 -> Exportar Informe XML y Trabjadores JSON
+                2 -> Exportar Informe XML y Entidades en JSON
                 3 -> Salir
         """.trimIndent())
             val respuesta = readln()

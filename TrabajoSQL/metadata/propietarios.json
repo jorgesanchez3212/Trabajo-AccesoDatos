@@ -1,0 +1,51 @@
+[
+    {
+        "uuid": "8b679081-b5f8-414b-9380-9c1a2fac3928",
+        "dni": "12345678A",
+        "nombre": "Juan",
+        "apellidos": "Pérez López",
+        "teléfono": "123456789"
+    },
+    {
+        "uuid": "7f8c0376-67d2-4f1a-9212-b23f613f7c6d",
+        "dni": "87654321B",
+        "nombre": "María",
+        "apellidos": "García Fernández",
+        "teléfono": "987654321"
+    },
+    {
+        "uuid": "5b411ed6-b68b-4f8c-a30d-10350aab6c0e",
+        "dni": "56789012C",
+        "nombre": "Pedro",
+        "apellidos": "Martínez Sánchez",
+        "teléfono": "555555555"
+    },
+    {
+        "uuid": "68f84205-cf95-4dfe-900e-d8249d7a67a8",
+        "dni": "90123456D",
+        "nombre": "Laura",
+        "apellidos": "Torres Rodríguez",
+        "teléfono": "111111111"
+    },
+    {
+        "uuid": "6fb919d6-1422-4458-a0aa-ef5e06f0b8b1",
+        "dni": "34567890E",
+        "nombre": "Ana",
+        "apellidos": "López Navarro",
+        "teléfono": "999999999"
+    },
+    {
+        "uuid": "ef9a17e4-d4df-4437-8109-fedb5a7fb8dc",
+        "dni": "67890123F",
+        "nombre": "Carlos",
+        "apellidos": "Gómez Ruiz",
+        "teléfono": "777777777"
+    },
+    {
+        "uuid": "d57ba50f-5efd-4936-8634-ee4d31dcf25c",
+        "dni": "23456789G",
+        "nombre": "Sara",
+        "apellidos": "Hernández García",
+        "teléfono": "444444444"
+    }
+]

@@ -60,6 +60,9 @@ dependencies {
     implementation("io.github.reactivecircus.cache4k:cache4k:0.9.0")
     // Serializa Json
     implementation('org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1')
+    // XML
+    implementation("io.github.pdvrieze.xmlutil:serialization-jvm:0.84.3")
+
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
     testImplementation("io.mockk:mockk:1.12.4")
