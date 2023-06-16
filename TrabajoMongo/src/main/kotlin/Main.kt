@@ -28,16 +28,14 @@ fun main() = runBlocking {
         VehiculoController(VehiculoRepository(), VehiculoRepositoryCached(VehiculosCache()))
     )
 
+    println("💻Bienvenido a la ITV...😎")
+
     CoroutineScope(Dispatchers.IO).launch {
         cita.state.collect{
-            println("SE HA PRODUCIDO CAMBIO EN CITAS -> $it")
+            println("SE HA PRODUCIDO CAMBIO EN CITAS 💻 -> $it")
         }
     }
 
-    itv.añadirDatos()
-    itv.informes("data" + File.separator+"trabajadores.csv")
-
-
-    System.exit(0)
+    itv.menu()
 
 }

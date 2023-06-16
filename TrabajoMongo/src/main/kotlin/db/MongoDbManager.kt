@@ -12,18 +12,12 @@ object MongoDbManager {
 
     private const val MONGO_TYPE = "mongodb://"
     private const val HOST = "localhost"
-    private const val PORT = 27017
     private const val DATABASE = "itv"
-    private const val USERNAME = "mongoadmin"
-    private const val PASSWORD = "mongopass"
     private const val OPTIONS = "?authSource=admin"
 
 
     private const val MONGO_URI =
         "$MONGO_TYPE$HOST/$DATABASE"
-
-    //println("mongodb://localhost/tenistas?authSource=admin")
-
 
 
 

@@ -1,8 +1,10 @@
 package models
 
+import kotlinx.serialization.Serializable
 import org.bson.codecs.pojo.annotations.BsonId
 import org.litote.kmongo.newId
 
+@Serializable
 data class Informe(
     @BsonId
     val _id : String = newId<Informe>().toString(),

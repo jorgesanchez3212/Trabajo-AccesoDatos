@@ -1,0 +1,79 @@
+[
+    {
+        "_id": "1",
+        "frenado": 5,
+        "contaminación": 2.1,
+        "aptoFrenado": true,
+        "luces": true,
+        "apto": true,
+        "idTrabajador": "1",
+        "idVehiculo": "1",
+        "idPropietario": "1"
+    },
+    {
+        "_id": "2",
+        "frenado": 3,
+        "contaminación": 1.8,
+        "aptoFrenado": false,
+        "luces": true,
+        "apto": false,
+        "idTrabajador": "2",
+        "idVehiculo": "2",
+        "idPropietario": "2"
+    },
+    {
+        "_id": "3",
+        "frenado": 4,
+        "contaminación": 1.5,
+        "aptoFrenado": true,
+        "luces": false,
+        "apto": false,
+        "idTrabajador": "3",
+        "idVehiculo": "3",
+        "idPropietario": "3"
+    },
+    {
+        "_id": "4",
+        "frenado": 2,
+        "contaminación": 3.2,
+        "aptoFrenado": false,
+        "luces": true,
+        "apto": false,
+        "idTrabajador": "4",
+        "idVehiculo": "4",
+        "idPropietario": "4"
+    },
+    {
+        "_id": "5",
+        "frenado": 5,
+        "contaminación": 2.5,
+        "aptoFrenado": true,
+        "luces": true,
+        "apto": true,
+        "idTrabajador": "5",
+        "idVehiculo": "5",
+        "idPropietario": "5"
+    },
+    {
+        "_id": "6",
+        "frenado": 3,
+        "contaminación": 1.9,
+        "aptoFrenado": false,
+        "luces": false,
+        "apto": false,
+        "idTrabajador": "6",
+        "idVehiculo": "6",
+        "idPropietario": "6"
+    },
+    {
+        "_id": "7",
+        "frenado": 4,
+        "contaminación": 1.4,
+        "aptoFrenado": true,
+        "luces": true,
+        "apto": false,
+        "idTrabajador": "7",
+        "idVehiculo": "7",
+        "idPropietario": "7"
+    }
+]

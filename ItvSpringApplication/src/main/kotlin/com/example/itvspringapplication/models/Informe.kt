@@ -3,6 +3,7 @@ package com.example.itvspringapplication.models
 import kotlinx.serialization.Serializable
 import org.bson.types.ObjectId
 import org.springframework.data.annotation.Id
+import org.springframework.data.mongodb.core.mapping.DBRef
 import org.springframework.data.mongodb.core.mapping.Document
 import org.springframework.data.mongodb.core.mapping.DocumentReference
 
@@ -16,11 +17,11 @@ data class Informe(
     val aptoFrenado: Boolean,
     val luces : Boolean,
     val apto : Boolean,
-    @DocumentReference
+    @DocumentReference(lookup = "{ '_id' : ?#{#target} }")
     val idTrabajador: Trabajador,
-    @DocumentReference
+    @DocumentReference(lookup = "{ '_id' : ?#{#target} }")
     val idVehiculo: Vehiculo,
-    @DocumentReference
+    @DocumentReference(lookup = "{ '_id' : ?#{#target} }")
     val idPropietario: Propietario,
 ) {
 

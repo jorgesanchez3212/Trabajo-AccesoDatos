@@ -19,7 +19,7 @@ class CitaController(
     private val cache : CitaRepositoryCached
 ) {
 
-    private val _state = MutableSharedFlow<Cita>(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
+    private val _state = MutableSharedFlow<String>(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
     val state = _state.asSharedFlow()
 
     suspend fun findAllCita() : Flow<Cita>? {
@@ -44,7 +44,7 @@ class CitaController(
 
         launch {
             citaRepository.save(entity)
-            _state.emit(entity)
+            _state.emit("Se ha añadido la cita $entity")
         }
         launch {
             cache.save(entity)
@@ -74,6 +74,8 @@ class CitaController(
         withContext(Dispatchers.IO){
             launch {
                 citaRepository.delete(id)
+                _state.emit("Se ha borrado la cita con id $id")
+
             }
         }
         cache.delete(id)
@@ -85,7 +87,7 @@ class CitaController(
         withContext(Dispatchers.IO){
             launch {
                 citaRepository.update(entity)
-                _state.emit(entity)
+                _state.emit("Se ha actualizado la cita $entity")
             }
         }
         cache.update(entity)

@@ -2,11 +2,13 @@ package view
 
 import controllers.*
 import db.Data
+import dto.InformeDTO
 import kotlinx.coroutines.flow.toList
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import models.Trabajador
+import models.*
 import mu.KotlinLogging
+import nl.adaptivity.xmlutil.serialization.XML
 import java.io.File
 import java.nio.file.Files
 import java.time.LocalDate
@@ -28,36 +30,45 @@ class ItvView(
             trabajadorController.saveTrabajador(it)
         }
         val trabajadores = trabajadorController.findAllTrabajadores()!!.toList()
-        val list = mutableListOf<String>()
 
         //Trabajador que mas gana sin ser responsable
         val trabajador = trabajadores.filter { it.responsable == false }.maxBy { it.salario }
         println("El trabajador que mas gana sin ser responsable es ${trabajador.toString()}")
-        list.add("El trabajador que mas gana sin ser responsable es ${trabajador.toString()}")
 
         //Salario medio de todos los trabajadores que no son responsables
         val salarioMedio = trabajadores.filter { it.responsable == false }.map { it.salario }.average()
         println("Salario medio de todos los trabajadores que no son responsables es $salarioMedio")
-        list.add("Salario medio de todos los trabajadores que no son responsables es $salarioMedio")
 
         //El salario medio de todos los trabajadores agrupados por especialidad.
-        val salarioMedioAgrupadosPorEspecialidad = trabajadores.groupBy { it.especialidad }.mapValues {
+        val salarioMedioAgrupadosPorEspecialidad : Map<String, Double> = trabajadores.groupBy { it.especialidad }.mapValues {
             entry -> entry.value.map { it.salario }.average() }
         println("Salario medio agrupados por especialidad es $salarioMedioAgrupadosPorEspecialidad")
-        list.add("Salario medio agrupados por especialidad es $salarioMedioAgrupadosPorEspecialidad")
 
         //- La el trabajador/a con menos antigüedad
         val trabajadorMenosAntiguedad = trabajadores.minBy { it.fechaContratacion }
         println("La el trabajador/a con menos antigüedad $trabajadorMenosAntiguedad")
-        list.add("La el trabajador/a con menos antigüedad $trabajadorMenosAntiguedad")
 
         // Trabajadores ordenados por especialidad y ordenados por antiguedad
         val trabajadoresOrdenados = trabajadores.sortedWith(compareBy(Trabajador::especialidad,Trabajador::fechaContratacion))
         println("Trabajadores ordenados por especialidad y ordenados por antiguedad son $trabajadoresOrdenados")
-        list.add("Trabajadores ordenados por especialidad y ordenados por antiguedad son $trabajadoresOrdenados")
 
-        exportarJSON("./metadata",list)
-        exportarJSONTrabajadores("./metadata", lista)
+        val informe = InformeDTO(
+            trabajador.toString(),
+            salarioMedio,
+            salarioMedioAgrupadosPorEspecialidad.toString(),
+            trabajadorMenosAntiguedad.toString(),
+            trabajadoresOrdenados.toString()
+        )
+        exportarJSONTrabajadores("."+File.separator +"metadata", Data.trabajadores)
+        exportarJSONPropietarios("."+File.separator +"metadata", Data.propietarios)
+        exportarJSONVehiculos("."+File.separator +"metadata", Data.vehiculos)
+        exportarJSONInformes("."+File.separator +"metadata", Data.informes)
+        exportarJSONCitas("."+File.separator +"metadata", Data.citas)
+
+
+
+
+        exportarXML("."+File.separator +"metadata",informe)
 
         lista.forEach {
             trabajadorController.borrarTrabajador(it._id)
@@ -65,19 +76,18 @@ class ItvView(
 
     }
 
-    fun exportarJSON(ruta: String, contenedores: List<String>) {
-        logger.debug { "Exportando archivo json" }
+
+    fun exportarXML(ruta: String, informe : InformeDTO){
         if (Files.exists(Path(ruta))) {
-            val json = Json { prettyPrint = true }
-            val fichero = File(ruta + File.separator + "consultas.json")
-            fichero.writeText(json.encodeToString(contenedores))
+            val fichero = File(ruta + File.separator + "informe.xml")
+            val xml = XML {indentString = " "}
+            val x = xml.encodeToString(InformeDTO.serializer(),informe)
+            fichero.writeText(x)
+
         }else {
             Files.createDirectories(Path(ruta))
-            val json = Json { prettyPrint = true }
-            val fichero = File(ruta + File.separator + "consultas.json")
-            fichero.writeText(json.encodeToString(contenedores))
-        }
 
+        }
     }
 
     fun exportarJSONTrabajadores(ruta: String, trabajadores: List<Trabajador>) {
@@ -91,6 +101,66 @@ class ItvView(
             val json = Json { prettyPrint = true }
             val fichero = File(ruta + File.separator + "trabajadores.json")
             fichero.writeText(json.encodeToString(trabajadores))
+        }
+
+    }
+
+    fun exportarJSONPropietarios(ruta: String, propietario: List<Propietario>) {
+        logger.debug { "Exportando archivo json" }
+        if (Files.exists(Path(ruta))) {
+            val json = Json { prettyPrint = true }
+            val fichero = File(ruta + File.separator + "propietarios.json")
+            fichero.writeText(json.encodeToString(propietario))
+        }else {
+            Files.createDirectories(Path(ruta))
+            val json = Json { prettyPrint = true }
+            val fichero = File(ruta + File.separator + "propietarios.json")
+            fichero.writeText(json.encodeToString(propietario))
+        }
+
+    }
+
+    fun exportarJSONVehiculos(ruta: String, vehiculo: List<Vehiculo>) {
+        logger.debug { "Exportando archivo json" }
+        if (Files.exists(Path(ruta))) {
+            val json = Json { prettyPrint = true }
+            val fichero = File(ruta + File.separator + "vehiculos.json")
+            fichero.writeText(json.encodeToString(vehiculo))
+        }else {
+            Files.createDirectories(Path(ruta))
+            val json = Json { prettyPrint = true }
+            val fichero = File(ruta + File.separator + "vehiculos.json")
+            fichero.writeText(json.encodeToString(vehiculo))
+        }
+
+    }
+
+    fun exportarJSONInformes(ruta: String, informe: List<Informe>) {
+        logger.debug { "Exportando archivo json" }
+        if (Files.exists(Path(ruta))) {
+            val json = Json { prettyPrint = true }
+            val fichero = File(ruta + File.separator + "informes.json")
+            fichero.writeText(json.encodeToString(informe))
+        }else {
+            Files.createDirectories(Path(ruta))
+            val json = Json { prettyPrint = true }
+            val fichero = File(ruta + File.separator + "informes.json")
+            fichero.writeText(json.encodeToString(informe))
+        }
+
+    }
+
+    fun exportarJSONCitas(ruta: String, citas: List<Cita>) {
+        logger.debug { "Exportando archivo json" }
+        if (Files.exists(Path(ruta))) {
+            val json = Json { prettyPrint = true }
+            val fichero = File(ruta + File.separator + "citas.json")
+            fichero.writeText(json.encodeToString(citas))
+        }else {
+            Files.createDirectories(Path(ruta))
+            val json = Json { prettyPrint = true }
+            val fichero = File(ruta + File.separator + "citas.json")
+            fichero.writeText(json.encodeToString(citas))
         }
 
     }
@@ -159,28 +229,28 @@ class ItvView(
             informeController.saveInforme(i)
         }
 
+
+
+        println("Buscando entidades por id")
         println("Buscar trabajador por id")
         val t = trabajadorController.findById("1")
         println("Trabajador con id $t")
         println("Buscar propietario por id")
         val p = propietarioController.findByIdPropietario("1")
         println("Propietario con id $p")
-
         println("Buscar vehiculo por id")
         val v = vehiculoController.findByIdVehiculo("1")
         println("Vehiculo con id $v")
-
         println("Buscar cita por id")
         val c = citaController.findByIdCita("1")
         println("Cita con id $c")
-
         println("Buscar informe por id")
         val i = informeController.findByIdInforme("1")
         println("Informe con id  $i")
 
 
 
-
+        println("Borrando las entidades por id")
         println("Borrar trabajador por id")
         trabajadorController.borrarTrabajador("1")
         println("Borrar propietario por id")
@@ -191,6 +261,25 @@ class ItvView(
         citaController.borrarCita("1")
         println("Borrar informe por id")
         informeController.borrarInforme("1")
+
+    }
+
+    suspend fun menu(){
+        while (true) {
+            println("""
+            Elige una opcion:💻🫡
+                1 -> Añadir Datos
+                2 -> Exportar Informe XML y Trabjadores JSON
+                3 -> Salir
+        """.trimIndent())
+            val respuesta = readln()
+            when (respuesta){
+                "1" -> añadirDatos()
+                "2" -> informes("data" + File.separator+"trabajadores.csv")
+                "3" -> System.exit(0)
+            }
+        }
+
 
     }
 
