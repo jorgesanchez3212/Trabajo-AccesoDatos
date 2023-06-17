@@ -15,7 +15,6 @@ import javax.persistence.Persistence
 val logger = KotlinLogging.logger {}
 
 object HibernateManager : Closeable {
-    // Creamos las EntityManagerFactory para manejar las entidades y transacciones
     private var entityManagerFactory = Persistence.createEntityManagerFactory("default")
     lateinit var manager: EntityManager
     private lateinit var transaction: EntityTransaction
@@ -23,10 +22,7 @@ object HibernateManager : Closeable {
 
 
     init {
-        // Creamos la EntityManagerFactory
-        // Creamos la EntityManager
         manager = entityManagerFactory.createEntityManager()
-        // Creamos la transacción
         transaction = manager.transaction
     }
 
@@ -64,7 +60,6 @@ object HibernateManager : Closeable {
         try {
             logger.debug { "Transaction iniciada" }
             transaction.begin()
-            // Aquí las operaciones
             operations()
             transaction.commit()
             logger.debug { "Transaction finalizada" }

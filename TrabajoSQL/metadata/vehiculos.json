@@ -1,6 +1,6 @@
 [
     {
-        "uuid": "ebba17ad-c91e-4537-96dc-425a79b98235",
+        "uuid": "a4fb77c6-d9fb-459f-b496-e6ed7363bb61",
         "marca": "Toyota",
         "modelo": "Corolla",
         "matricula": "ABC123",
@@ -8,7 +8,7 @@
         "fechaUltimaRevision": "2022-12-30"
     },
     {
-        "uuid": "198630eb-29d9-4bf0-a38c-613ab3383a6e",
+        "uuid": "fcc61f01-c1ee-4a4f-83a5-451102fe9cbe",
         "marca": "Honda",
         "modelo": "Civic",
         "matricula": "DEF456",
@@ -16,7 +16,7 @@
         "fechaUltimaRevision": "2023-01-05"
     },
     {
-        "uuid": "e36949d2-710a-4f3d-a011-e5c669a72861",
+        "uuid": "c6ff143b-5450-4e6d-8a52-74cd6846aac1",
         "marca": "Ford",
         "modelo": "Focus",
         "matricula": "GHI789",
@@ -24,7 +24,7 @@
         "fechaUltimaRevision": "2022-09-20"
     },
     {
-        "uuid": "7d23466e-f8b6-4f41-8a0d-ffa50ff8ab0a",
+        "uuid": "b0b64537-a2da-490b-b097-76aef409b345",
         "marca": "Volkswagen",
         "modelo": "Golf",
         "matricula": "JKL012",
@@ -32,7 +32,7 @@
         "fechaUltimaRevision": "2023-05-15"
     },
     {
-        "uuid": "bf2672bc-3cfa-4623-80b5-fa126d0f3248",
+        "uuid": "fbcd38dc-6ab3-4bc5-81ec-a5d5ad272554",
         "marca": "Chevrolet",
         "modelo": "Cruze",
         "matricula": "MNO345",
@@ -40,7 +40,7 @@
         "fechaUltimaRevision": "2021-12-10"
     },
     {
-        "uuid": "1a5d218a-1e24-4252-b4e5-4aa3db9896d8",
+        "uuid": "f4ae67db-6984-4b16-a0b8-ae9ed483a0df",
         "marca": "BMW",
         "modelo": "X5",
         "matricula": "PQR678",
@@ -48,7 +48,7 @@
         "fechaUltimaRevision": "2023-04-28"
     },
     {
-        "uuid": "ff7498bb-d554-4ba0-97cc-21c2adabf70e",
+        "uuid": "14f20bc1-a83c-44ab-96a7-d7a1cc3611f0",
         "marca": "Mercedes-Benz",
         "modelo": "E-Class",
         "matricula": "STU901",
